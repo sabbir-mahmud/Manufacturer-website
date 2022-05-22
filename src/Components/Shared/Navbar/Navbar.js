@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 import CustomLink from './CustomLink';
 
 const Navbar = () => {
+    const { user, handleLogout } = useUser();
     const menuLinks = <>
         <li><CustomLink to='/'>Home</CustomLink></li>
         <li><CustomLink to='/products'>Products</CustomLink></li>
@@ -33,7 +35,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <div className="dropdown dropdown-end">
+                    {user.uid ? <div className="dropdown dropdown-end">
                         <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img src="https://api.lorem.space/image/face?hash=33791" alt='' />
@@ -47,9 +49,10 @@ const Navbar = () => {
                                 </a>
                             </li>
                             <li><a href='/'>Settings</a></li>
-                            <li><a href='/'>Logout</a></li>
+                            <li><button onClick={handleLogout} >Logout</button></li>
                         </ul>
-                    </div>
+                    </div> : <li className='list-none'><Link className='bg-secondary px-3 py-1 rounded text-white shadow' to='/login'>login</Link></li>}
+
                 </div>
             </div>
         </section>

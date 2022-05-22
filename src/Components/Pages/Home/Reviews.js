@@ -6,7 +6,6 @@ const Reviews = () => {
     const { data: reviews } = useQuery('reviews', () => {
         return fetch('http://localhost:5000/api/home/review').then(res => res.json());
     });
-    console.log(reviews);
     return (
         <div className="my-5">
             <div className="title">

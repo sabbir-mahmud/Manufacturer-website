@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import auth from "../../Firebase/firebase.init";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
+import auth from "../../firebase.init";
 
 const useUser = () => {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
 
     // get user from firebase
     useEffect(() => {
@@ -17,13 +18,17 @@ const useUser = () => {
             } else {
                 setUser({});
             }
+
+
             setLoading(false);
         });
         return () => unsubscribe;
     }, []);
 
+
+
     const handleLogout = () => {
-        localStorage.removeItem(user.email)
+        // localStorage.removeItem(user.email)
         auth.signOut();
         Navigate('/login')
         setUser({});

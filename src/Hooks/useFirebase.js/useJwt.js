@@ -1,4 +1,5 @@
-const generateToken = async ({ url, email }) => {
+const generateToken = async (email) => {
+    const url = `http://localhost:5000/api/login`
     fetch(url, {
         method: "POST",
         headers: {
@@ -8,6 +9,7 @@ const generateToken = async ({ url, email }) => {
     })
         .then((res) => res.json())
         .then((data) => {
+            console.log(data);
             const token = data.accessToken;
             localStorage.setItem(email, token);
         });

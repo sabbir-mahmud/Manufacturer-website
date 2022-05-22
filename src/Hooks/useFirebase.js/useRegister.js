@@ -1,9 +1,9 @@
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import useUser from "./useUser";
-import auth from '../../Firebase/firebase.init';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import generateToken from "./useJwt";
+import auth from "../../firebase.init";
 
 const useRegister = () => {
     const { setUser, setLoading } = useUser();
@@ -34,7 +34,7 @@ const useRegister = () => {
         e.preventDefault();
         // from elements property
 
-        const fullName = e.target.fullName.value;
+        const fullName = e.target.displayName.value;
         const email = e.target.email.value;
         const userPassword = e.target.password.value;
         const confirmPassword = e.target.confirmPassword.value;
@@ -57,7 +57,8 @@ const useRegister = () => {
                 // uncomment this line if you want to use jwt
                 // generateToken({ url, email }); 
                 verifyEmail();
-                navigate('/login')
+                // navigate('/login')
+                console.log(user);
             }
             )
             .catch((error) => {
