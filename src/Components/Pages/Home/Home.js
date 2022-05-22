@@ -1,4 +1,5 @@
 import React from 'react';
+import Contact from './Contact';
 import Faq from './Faq';
 import HomeBanner from './HomeBanner';
 import HomeProducts from './HomeProducts';
@@ -13,10 +14,10 @@ const Home = () => {
             <div className="products">
                 <HomeProducts />
             </div>
-
             <Reviews />
             <Summary />
             <Faq />
+            <Contact />
 
 
         </section>
