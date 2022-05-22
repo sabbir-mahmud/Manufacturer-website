@@ -1,7 +1,9 @@
 import React from 'react';
+import Faq from './Faq';
 import HomeBanner from './HomeBanner';
-import HomeCarousel from './HomeCarousel';
 import HomeProducts from './HomeProducts';
+import Reviews from './Reviews';
+import Summary from './Summary';
 const Home = () => {
     return (
         <section className='container mx-auto'>
@@ -11,12 +13,11 @@ const Home = () => {
             <div className="products">
                 <HomeProducts />
             </div>
-            <div>
-                <div className="mt-5 mb-24">
-                    <h2 className="text-primary font-bold text-4xl text-center">Images Gallery</h2>
-                </div>
-                <HomeCarousel />
-            </div>
+
+            <Reviews />
+            <Summary />
+            <Faq />
+
 
         </section>
     );
