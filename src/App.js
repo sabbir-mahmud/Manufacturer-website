@@ -10,6 +10,10 @@ import AddProduct from './Components/Pages/Products/AddProduct';
 import Products from './Components/Pages/Products/Products';
 import ProductDetails from './Components/Pages/Products/ProductDetails';
 import { ToastContainer } from 'react-toastify';
+import Dashboard from './Components/Pages/Dashboard/Dashboard';
+import Orders from './Components/Pages/Dashboard/Orders';
+import MyReviews from './Components/Pages/Dashboard/MyReviews';
+import NotFound from './Components/Shared/NotFound/NotFound';
 
 function App() {
   return (
@@ -20,8 +24,13 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/addProduct" element={<AddProduct />} />
+        <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+          <Route index element={<Orders />} />
+          <Route path="myReviews" element={<MyReviews />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound></NotFound>} />
 
       </Routes>
       <Footer />

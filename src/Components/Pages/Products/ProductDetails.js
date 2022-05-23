@@ -24,7 +24,8 @@ const ProductDetails = () => {
         else {
             const order = {
                 user: user.email,
-                product: id,
+                productName: product.name,
+                price: product.price,
                 quantity: e.target.quantity.value,
             }
             fetch('http://localhost:5000/api/order', {
