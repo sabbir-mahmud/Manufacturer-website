@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 import Loading from '../../Shared/Loading/Loading';
 
@@ -7,7 +8,7 @@ const EditProfile = () => {
     const { user, loading } = useUser();
     const {
         register,
-        handleSubmit,
+        handleSubmit, formState: { errors }
     } = useForm();
     if (loading) {
         return <Loading />
@@ -20,12 +21,10 @@ const EditProfile = () => {
         const formData = new FormData();
         formData.append('image', image);
         const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
-        console.log(url);
         fetch(url, {
             method: 'POST',
             body: formData,
         }).then(res => res.json()).then(result => {
-            console.log(result);
             if (result.success) {
                 const img = result.data.url;
                 const userProfile = {
@@ -45,8 +44,7 @@ const EditProfile = () => {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(userProfile),
-                }).then(res => res.json()).then(result => console.log(result))
-
+                }).then(res => res.json()).then(result => toast.info('Profile Updated'));
             }
         })
 
@@ -55,7 +53,7 @@ const EditProfile = () => {
     return (
         <div>
             <div className=" my-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
-                <h3 className='text-center font-bold pt-5'>Add a review</h3>
+                <h3 className='text-center text-3xl font-bold pt-5'>Update your profile</h3>
                 <form className='flex w-3/5 mx-auto' onSubmit={handleSubmit(handleEditProfile)} >
                     <div className="card-body">
                         <div className="form-control">
@@ -74,20 +72,35 @@ const EditProfile = () => {
                             <label className="label">
                                 <span className="label-text">Phone Number</span>
                             </label>
-                            <input type="number" {...register('number')} placeholder='+8801723451241' className="input input-bordered" />
+                            <input type="number" {...register('number', {
+                                required: {
+                                    value: true,
+                                    message: 'number is Required'
+                                }
+                            })} placeholder='+8801723451241' className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">location</span>
                             </label>
-                            <input type="text" {...register('location')} name='location' placeholder='Dhaka, Bangladesh' className="input input-bordered" />
+                            <input type="text" {...register('location', {
+                                required: {
+                                    value: true,
+                                    message: 'location is Required'
+                                }
+                            })} name='location' placeholder='Dhaka, Bangladesh' className="input input-bordered" />
                         </div>
 
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Bio</span>
                             </label>
-                            <textarea {...register('bio')} className="input input-bordered" name="bio" id="bio" cols="30" rows="10"></textarea>
+                            <textarea {...register('bio', {
+                                required: {
+                                    value: true,
+                                    message: 'bio is Required'
+                                }
+                            })} className="input input-bordered" name="bio" id="bio" cols="30" rows="10"></textarea>
 
                         </div>
 
@@ -95,28 +108,48 @@ const EditProfile = () => {
                             <label className="label">
                                 <span className="label-text">Education</span>
                             </label>
-                            <input type="text" {...register('education')} name='education' placeholder='MERN-STACK at Programming Hero' className="input input-bordered" />
+                            <input type="text" {...register('education', {
+                                required: {
+                                    value: true,
+                                    message: 'education is Required'
+                                }
+                            })} name='education' placeholder='MERN-STACK at Programming Hero' className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">LinkedIn</span>
                             </label>
-                            <input type="text" {...register('LinkedIn')} name='LinkedIn' placeholder='https://www.linkedin.com/in/sabbirmahmudzim/' className="input input-bordered" />
+                            <input type="text" {...register('LinkedIn', {
+                                required: {
+                                    value: true,
+                                    message: 'LinkedIn is Required'
+                                }
+                            })} name='LinkedIn' placeholder='https://www.linkedin.com/in/sabbirmahmudzim/' className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Github</span>
                             </label>
-                            <input type="text" {...register('github')} name='github' placeholder='https://github.com/sabbir-mahmud' className="input input-bordered" />
+                            <input type="text" {...register('github', {
+                                required: {
+                                    value: true,
+                                    message: 'github is Required'
+                                }
+                            })} name='github' placeholder='https://github.com/sabbir-mahmud' className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Upload Avatar</span>
                             </label>
-                            <input type="file" {...register('avatar')} name='avatar' className="input input-bordered py-2" />
+                            <input type="file" {...register('avatar', {
+                                required: {
+                                    value: true,
+                                    message: 'avatar is Required'
+                                }
+                            })} name='avatar' className="input input-bordered py-2" />
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Add Review</button>
+                            <button className="btn btn-primary">Update Profile</button>
                         </div>
                     </div>
                 </form>

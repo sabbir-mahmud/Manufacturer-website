@@ -1,10 +1,17 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 import CustomLink from './CustomLink';
 
 const Navbar = () => {
-    const { user, handleLogout } = useUser();
+    const { user, loading, handleLogout } = useUser();
+    const { data: userDetails, isLoading } = useQuery(['userDetails', user.uid], () => {
+        return fetch(`http://localhost:5000/api/users/profile/${user.email}`).then(res => res.json());
+    })
+
+    const img = 'https://api.lorem.space/image/face?hash=33791'
+
     const menuLinks = <>
         <li><CustomLink to='/'>Home</CustomLink></li>
         <li><CustomLink to='/products'>Products</CustomLink></li>
@@ -40,7 +47,7 @@ const Navbar = () => {
                     {user.uid ? <div className="dropdown dropdown-end">
                         <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img src="https://api.lorem.space/image/face?hash=33791" alt='' />
+                                <img src={userDetails?.avatar ? userDetails?.avatar : img} alt='' />
                             </div>
                         </label>
                         <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
@@ -49,7 +56,7 @@ const Navbar = () => {
                                     Profile
                                 </Link>
                             </li>
-                            <li><a href='/'>Settings</a></li>
+                            <li><Link to='/dashboard/settings'>Settings</Link></li>
                             <li><button onClick={handleLogout} >Logout</button></li>
                         </ul>
                     </div> : <li className='list-none'><Link className='bg-secondary px-3 py-1 rounded text-white shadow' to='/login'>login</Link></li>}
