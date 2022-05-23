@@ -8,11 +8,13 @@ const Navbar = () => {
     const menuLinks = <>
         <li><CustomLink to='/'>Home</CustomLink></li>
         <li><CustomLink to='/products'>Products</CustomLink></li>
+        <li><CustomLink to='/dashboard'>Dashboard</CustomLink></li>
         <li><CustomLink to='/blogs'>Blogs</CustomLink></li>
     </>
     const MobileLinks = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/products'>Products</Link></li>
+        <li><Link to='/dashboard'>Dashboard</Link></li>
         <li><Link to='/blogs'>Blogs</Link></li>
     </>
     return (
@@ -43,10 +45,9 @@ const Navbar = () => {
                         </label>
                         <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li>
-                                <a href='/' className="justify-between">
+                                <Link to='/dashboard/profile' className="justify-between">
                                     Profile
-                                    <span className="badge">New</span>
-                                </a>
+                                </Link>
                             </li>
                             <li><a href='/'>Settings</a></li>
                             <li><button onClick={handleLogout} >Logout</button></li>

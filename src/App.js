@@ -14,6 +14,7 @@ import Dashboard from './Components/Pages/Dashboard/Dashboard';
 import Orders from './Components/Pages/Dashboard/Orders';
 import MyReviews from './Components/Pages/Dashboard/MyReviews';
 import NotFound from './Components/Shared/NotFound/NotFound';
+import Profile from './Components/Pages/Dashboard/Profile';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard></Dashboard>}>
           <Route index element={<Orders />} />
           <Route path="myReviews" element={<MyReviews />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

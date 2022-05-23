@@ -8,10 +8,10 @@ const Orders = () => {
         return fetch(`http://localhost:5000/api/order/?email=${user.email}`)
             .then(res => res.json());
     })
-    console.log(order);
+
     return (
-        <div class="overflow-x-auto">
-            <table class="table w-full">
+        <div className="overflow-x-auto">
+            <table className="table w-full">
 
                 <thead>
                     <tr>
@@ -26,7 +26,7 @@ const Orders = () => {
                     {
                         order?.map(order => {
                             return (
-                                <tr>
+                                <tr key={order._id} className="hover">
                                     <td>{order?.productName}</td>
                                     <td>{order?.price}</td>
                                     <td>{order?._id}</td>
