@@ -6,8 +6,8 @@ const Profile = () => {
     return (
         <div className='my-24 container mx-auto px-14'>
             <div className="profile flex items-center">
-                <div class="avatar mr-14">
-                    <div class="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <div className="avatar mr-14">
+                    <div className="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                         <img src="https://api.lorem.space/image/face?hash=3174" alt='' />
                     </div>
                 </div>

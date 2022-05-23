@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 const AddProduct = () => {
     const {
         register,
-        handleSubmit, formState: { errors },
+        handleSubmit,
     } = useForm();
     const imageStorageKey = 'd6cf365aabe2ff86e40fafe5d6f330c1'
 

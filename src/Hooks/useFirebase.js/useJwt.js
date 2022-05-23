@@ -1,7 +1,7 @@
 const generateToken = async (email) => {
     const url = `http://localhost:5000/api/login`
     fetch(url, {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },

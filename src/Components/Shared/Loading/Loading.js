@@ -2,13 +2,10 @@ import React from 'react';
 
 const Loading = () => {
     return (
-        <div>
-            <progress className="progress progress-error w-56" value="0" max="100"></progress>
-            <progress className="progress progress-error w-56" value="10" max="100"></progress>
-            <progress className="progress progress-error w-56" value="40" max="100"></progress>
-            <progress className="progress progress-error w-56" value="70" max="100"></progress>
-            <progress className="progress progress-error w-56" value="100" max="100"></progress>
-
+        <div className="flex items-center justify-center space-x-2 animate-bounce my-14">
+            <div className="w-8 h-8 bg-blue-400 rounded-full"></div>
+            <div className="w-8 h-8 bg-green-400 rounded-full"></div>
+            <div className="w-8 h-8 bg-black rounded-full"></div>
         </div>
     );
 };

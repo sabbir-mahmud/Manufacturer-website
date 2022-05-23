@@ -17,7 +17,6 @@ const useLogin = () => {
         setLoading(true);
         setError(null);
 
-
         const email = e.target.email.value;
         const password = e.target.password.value;
         signInWithEmailAndPassword(auth, email, password)
@@ -25,6 +24,7 @@ const useLogin = () => {
                 if (user?.user) {
                     const email = user.user.email;
                     setUser(user);
+                    generateToken(email);
                     toast.info("You are logged in!");
                     setLoading(false);
                     navigate(from);
