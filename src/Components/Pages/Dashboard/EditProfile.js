@@ -8,7 +8,7 @@ const EditProfile = () => {
     const { user, loading } = useUser();
     const {
         register,
-        handleSubmit, formState: { errors }
+        handleSubmit
     } = useForm();
     if (loading) {
         return <Loading />
@@ -54,7 +54,7 @@ const EditProfile = () => {
         <div>
             <div className=" my-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
                 <h3 className='text-center text-3xl font-bold pt-5'>Update your profile</h3>
-                <form className='flex w-3/5 mx-auto' onSubmit={handleSubmit(handleEditProfile)} >
+                <form className='flex w-4/5 mx-auto' onSubmit={handleSubmit(handleEditProfile)} >
                     <div className="card-body">
                         <div className="form-control">
                             <label className="label">

@@ -51,7 +51,7 @@ const AddProduct = () => {
                 <h3 className='text-2xl my-9 font-bold text-center'>Add Products</h3>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="w-3/4 mx-auto card flex-shrink-0 max-w-sm shadow-2xl bg-base-100">
+                <div className="w-3/4 mx-auto card  shadow-2xl bg-base-100">
                     <div className="card-body">
                         <div className="form-control">
                             <input type="text"  {...register('productName')} placeholder="Product Name: Mikrotik 1200PCB" className="input input-bordered" />
