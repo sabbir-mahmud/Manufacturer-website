@@ -9,7 +9,7 @@ function CustomLink({ children, to, ...props }) {
 
     return (
         <div>
-            <Link className={match ? 'bg-primary px-3 py-1 rounded text-white shadow' : 'bg-secondary px-3 py-1 rounded text-white shadow'}
+            <Link className={match ? 'bg-primary px-3 py-1 rounded text-white shadow' : ' text-white'}
                 // style={{ textDecoration: match ? "underline" : "none", color: match ? "blue" : 'white' }}
                 to={to}
                 {...props}

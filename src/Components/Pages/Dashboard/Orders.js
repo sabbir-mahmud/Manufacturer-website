@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const Orders = () => {
@@ -30,7 +31,15 @@ const Orders = () => {
                                     <td>{order?.productName}</td>
                                     <td>{order?.price}</td>
                                     <td>{order?._id}</td>
-                                    <td>pay</td>
+                                    <td>
+                                        {
+                                            order?.paid ? <p className='text-green-500'>Paid</p> :
+                                                <>
+                                                    <button>Cancel</button>
+                                                    <Link className='mx-2' to={`/dashboard/payment/${order._id}`}>pay</Link>
+                                                </>
+                                        }
+                                    </td>
                                 </tr>
                             )
                         })

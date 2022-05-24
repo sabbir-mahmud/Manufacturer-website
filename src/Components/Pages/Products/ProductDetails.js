@@ -25,6 +25,7 @@ const ProductDetails = () => {
             const order = {
                 user: user.email,
                 productName: product.name,
+                product: product._id,
                 price: product.price,
                 quantity: e.target.quantity.value,
             }

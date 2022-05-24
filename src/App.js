@@ -17,8 +17,14 @@ import NotFound from './Components/Shared/NotFound/NotFound';
 import Profile from './Components/Pages/Dashboard/Profile';
 import Users from './Components/Pages/Dashboard/Users';
 import EditProfile from './Components/Pages/Dashboard/EditProfile';
+import ManageOrder from './Components/Pages/Dashboard/ManageOrder';
+import Payment from './Components/Pages/Dashboard/Payment';
+import useAdmin from './Hooks/useAdmin/useAdmin';
+import useUser from './Hooks/useFirebase.js/useUser';
 
 function App() {
+  const { user } = useUser();
+  const { admin } = useAdmin(user);
   return (
     <div className='app'>
       <Navbar />
@@ -27,12 +33,16 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/dashboard" element={<Dashboard></Dashboard>}>
-          <Route index element={<Orders />} />
+          {
+            admin ? <Route index element={<ManageOrder />} /> : <Route index element={<Orders />} />
+          }
+
           <Route path="myReviews" element={<MyReviews />} />
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<Users />} />
           <Route path="settings" element={<EditProfile />} />
           <Route path="addProduct" element={<AddProduct />} />
+          <Route path="payment/:id" element={<Payment />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

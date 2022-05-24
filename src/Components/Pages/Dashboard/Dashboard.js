@@ -22,6 +22,7 @@ const Dashboard = () => {
                 <Outlet></Outlet>
 
 
+
             </div>
             <div className="drawer-side mt-5">
                 <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
@@ -33,6 +34,7 @@ const Dashboard = () => {
                             <>
                                 <li><Link to="/dashboard/users">Users</Link></li>
                                 <li><Link to="/dashboard/addProduct">add product</Link></li>
+                                <li><Link to="/dashboard/manage-orders">Manage Order</Link></li>
                             </> : <>
                                 <li><Link to='/dashboard'>My Orders</Link></li>
                                 <li><Link to="/dashboard/myReviews">Add A Review</Link></li>
