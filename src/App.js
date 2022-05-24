@@ -21,6 +21,8 @@ import ManageOrder from './Components/Pages/Dashboard/ManageOrder';
 import Payment from './Components/Pages/Dashboard/Payment';
 import useAdmin from './Hooks/useAdmin/useAdmin';
 import useUser from './Hooks/useFirebase.js/useUser';
+import RequireUser from './Components/Auth/RequireUser';
+import RequireAdmin from './Components/Auth/RequireAdmin';
 
 function App() {
   const { user } = useUser();
@@ -31,18 +33,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+        <Route path="/products/:id" element={<RequireUser><ProductDetails /></RequireUser>} />
+        <Route path="/dashboard" element={<RequireUser><Dashboard /></RequireUser>}>
           {
-            admin ? <Route index element={<ManageOrder />} /> : <Route index element={<Orders />} />
+            admin ? <Route index element={<RequireAdmin><ManageOrder /></RequireAdmin>} /> : <Route index element={<Orders />} />
           }
 
           <Route path="myReviews" element={<MyReviews />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="users" element={<Users />} />
-          <Route path="settings" element={<EditProfile />} />
-          <Route path="addProduct" element={<AddProduct />} />
           <Route path="payment/:id" element={<Payment />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<EditProfile />} />
+          <Route path="users" element={<RequireAdmin><Users /></RequireAdmin>} />
+          <Route path="addProduct" element={<RequireAdmin><AddProduct /></RequireAdmin>} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

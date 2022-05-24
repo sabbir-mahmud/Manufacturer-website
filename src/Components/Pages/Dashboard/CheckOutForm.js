@@ -12,22 +12,23 @@ const CheckOutForm = ({ order }) => {
     const pay = order?.pay;
     useEffect(() => {
 
-        fetch('http://localhost:5000/create-payment-intent', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({ pay })
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data?.clientSecret) {
-                    setClientSecret(data.clientSecret);
-                }
-            });
+        if (pay) {
+            fetch('http://localhost:5000/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify({ pay })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data?.clientSecret) {
+                        setClientSecret(data.clientSecret);
+                    }
+                });
+        }
 
-    }, [pay])
-    console.log(clientSecret);
+    }, [pay]);
 
     const handleSubmit = async (event) => {
         // We don't want to let default form submission happen here,

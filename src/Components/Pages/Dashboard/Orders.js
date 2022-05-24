@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
+import UserOrderDelete from './UserOrderDelete';
 
 const Orders = () => {
     const { user } = useUser();
-    const { data: order } = useQuery(["order", user.email], () => {
+    const { data: order, refetch } = useQuery(["order", user.email], () => {
         return fetch(`http://localhost:5000/api/order/?email=${user.email}`)
             .then(res => res.json());
     })
 
+    const [cancel, setCancel] = useState({});
+
     return (
         <div className="overflow-x-auto">
+            {
+                cancel._id && <UserOrderDelete cancel={cancel} refetch={refetch} setCancel={setCancel} />
+            }
             <table className="table w-full">
 
                 <thead>
@@ -35,8 +41,8 @@ const Orders = () => {
                                         {
                                             order?.paid ? <p className='text-green-500'>Paid</p> :
                                                 <>
-                                                    <button>Cancel</button>
-                                                    <Link className='mx-2' to={`/dashboard/payment/${order._id}`}>pay</Link>
+                                                    <label onClick={() => setCancel(order)} htmlFor="user-delete-order" className="text-red-500 hover:cursor-pointer hover:underline">Cancel</label>
+                                                    <Link className='mx-2 text-green-500 hover:underline' to={`/dashboard/payment/${order._id}`}>pay</Link>
                                                 </>
                                         }
                                     </td>

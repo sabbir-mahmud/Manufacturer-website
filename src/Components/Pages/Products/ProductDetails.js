@@ -38,9 +38,16 @@ const ProductDetails = () => {
             })
                 .then(res => res.json())
                 .then(result => {
-                    toast.success('Order placed successfully');
-                    e.target.reset();
-                    refetch()
+                    console.log(result);
+                    if (result.insertedId) {
+                        toast.success('Order placed successfully');
+                        e.target.reset();
+                        refetch();
+                    } else {
+                        toast.error(result.message);
+                    }
+
+
                 })
 
         }
@@ -52,20 +59,21 @@ const ProductDetails = () => {
         <div>
             <div className="hero min-h-screen bg-base-100">
                 <div className="hero-content flex-col lg:flex-row">
-                    <img src={product?.img} className="max-w-sm rounded-lg shadow-2xl" alt='' />
+                    <img src={product?.img} className="max-w-sm rounded-lg mr-14" alt='' />
                     <div>
-                        <h1 className="text-5xl font-bold">Brand: {product?.brand}</h1>
-                        <h1 className="text-5xl font-bold">Name: {product?.name}</h1>
-                        <p className="py-6">Model: {product?.model}</p>
-                        <p className="py-6">Quantity: {product?.Quantity}</p>
-                        <p className="py-6">Price: {product?.price}</p>
+                        <h1 className="text-4xl font-bold">Brand: {product?.brand}</h1>
+                        <h1 className="text-2xl font-bold">Name: {product?.name}</h1>
+                        <p className="py-1">Model: {product?.model}</p>
+                        <p className="py-1">Quantity: {product?.quantity}</p>
+                        <p className="py-1">Price: {product?.price}</p>
                     </div>
                 </div>
             </div>
-            <div className="mb-14">
-                <h3 className='text-center font-bold text-3xl '>Order this product</h3>
-            </div>
-            <div className=" my-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
+
+            <div className=" mb-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
+                <div className="pt-12 mb-14">
+                    <h3 className='text-center font-bold text-3xl '>Order this product</h3>
+                </div>
                 <form className='flex w-3/5 mx-auto' onSubmit={handleOrderSubmit}>
                     <div className="card-body">
                         <div className="form-control">

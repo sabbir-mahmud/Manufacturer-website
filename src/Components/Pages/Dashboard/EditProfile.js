@@ -8,7 +8,7 @@ const EditProfile = () => {
     const { user, loading } = useUser();
     const {
         register,
-        handleSubmit
+        handleSubmit, reset
     } = useForm();
     if (loading) {
         return <Loading />
@@ -44,7 +44,7 @@ const EditProfile = () => {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(userProfile),
-                }).then(res => res.json()).then(result => toast.info('Profile Updated'));
+                }).then(res => res.json()).then(result => { toast.info('Profile Updated'); reset() });
             }
         })
 
