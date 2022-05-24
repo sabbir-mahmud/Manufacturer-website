@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import OrderDelete from './OrderDelete';
 import ShippedModal from './ShipeedModal';
@@ -12,6 +13,9 @@ const ManageOrder = () => {
 
     return (
         <div className="overflow-x-auto px-2">
+            <Helmet>
+                <title>Manage Orders</title>
+            </Helmet>
             {
                 deleted._id && <OrderDelete deleted={deleted} refetch={refetch} setDeleted={setDeleted} />
             }
@@ -44,10 +48,10 @@ const ManageOrder = () => {
                                             order?.paid ?
                                                 <>
                                                     {
-                                                        order?.status ? <p className='text-green-500'>Delivered</p> : <label onClick={() => setShipped(order)} htmlFor="shipped-modal" className="btn modal-button">Shipped</label>
+                                                        order?.status ? <p className='text-green-500'>Delivered</p> : <label onClick={() => setShipped(order)} htmlFor="shipped-modal" className="text-orange-500 hover:underline hover:cursor-pointer">Shipped</label>
                                                     }
                                                 </> :
-                                                <label onClick={() => setDeleted(order)} htmlFor="delete-order" className="btn modal-button">Cancel</label>
+                                                <label onClick={() => setDeleted(order)} htmlFor="delete-order" className="text-red-500 hover:underline hover:cursor-pointer">Cancel</label>
                                         }
 
                                     </td>

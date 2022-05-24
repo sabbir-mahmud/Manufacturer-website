@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import HomeProduct from '../Home/HomeProduct';
 
@@ -6,6 +7,9 @@ const Products = () => {
     const { data: products } = useQuery('allProducts', () => fetch('http://localhost:5000/api/products').then(res => res.json()));
     return (
         <div className="container mx-auto my-14">
+            <Helmet>
+                <title>Products</title>
+            </Helmet>
             <div className="title">
                 <h3 className='text-2xl my-9 font-bold text-center'>Our products</h3>
             </div>

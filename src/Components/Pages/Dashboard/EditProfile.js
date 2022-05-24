@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
@@ -52,6 +53,9 @@ const EditProfile = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Edit Profile</title>
+            </Helmet>
             <div className=" my-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
                 <h3 className='text-center text-3xl font-bold pt-5'>Update your profile</h3>
                 <form className='flex w-4/5 mx-auto' onSubmit={handleSubmit(handleEditProfile)} >

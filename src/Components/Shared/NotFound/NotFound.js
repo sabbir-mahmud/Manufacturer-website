@@ -1,8 +1,12 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 
 const NotFound = () => {
     return (
         <div>
+            <Helmet>
+                <title>404 error</title>
+            </Helmet>
             <div className="bg-gray-50 flex items-center">
                 <div className="container mx-auto py-28 text-gray-700">
                     <div className="w-full lg:w-1/2 mx-8">

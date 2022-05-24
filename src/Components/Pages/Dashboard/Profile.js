@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 import Loading from '../../Shared/Loading/Loading';
@@ -14,6 +15,9 @@ const Profile = () => {
 
     return (
         <div className='my-24 container mx-auto px-14'>
+            <Helmet>
+                <title>{user?.displayName}</title>
+            </Helmet>
             <div className="profile flex items-center">
                 <div className="avatar mr-14">
                     <div className="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">

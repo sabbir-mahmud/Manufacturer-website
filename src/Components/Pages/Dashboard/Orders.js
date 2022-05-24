@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
@@ -15,6 +16,9 @@ const Orders = () => {
 
     return (
         <div className="overflow-x-auto">
+            <Helmet>
+                <title>Orders</title>
+            </Helmet>
             {
                 cancel._id && <UserOrderDelete cancel={cancel} refetch={refetch} setCancel={setCancel} />
             }
@@ -25,7 +29,8 @@ const Orders = () => {
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Order ID</th>
-                        <th>Action Color</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +41,7 @@ const Orders = () => {
                                 <tr key={order._id} className="hover">
                                     <td>{order?.productName}</td>
                                     <td>{order?.price}</td>
+                                    <td>{order?.status ? order?.status : 'pending'}</td>
                                     <td>{order?._id}</td>
                                     <td>
                                         {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Link, Outlet } from 'react-router-dom';
 import useAdmin from '../../../Hooks/useAdmin/useAdmin';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
@@ -13,6 +14,9 @@ const Dashboard = () => {
     }
     return (
         <div className="drawer drawer-mobile">
+            <Helmet>
+                <title>Dashboard</title>
+            </Helmet>
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
                 <div className="my-3">

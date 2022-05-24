@@ -1,10 +1,14 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import useRegister from '../../Hooks/useFirebase.js/useRegister';
 
 const Register = () => {
     const handleSignUp = useRegister();
     return (
         <div className='container mx-auto mt-14 mb-24'>
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
             <div className="shadow-md rounded-lg py-14">
                 <div className="title">
                     <h3 className='text-center text-4xl font-bold text-primary  mb-14'>Create a new account!</h3>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import Contact from './Contact';
 import Faq from './Faq';
 import HomeBanner from './HomeBanner';
@@ -8,6 +9,9 @@ import Summary from './Summary';
 const Home = () => {
     return (
         <section className='container mx-auto'>
+            <Helmet>
+                <title>Home</title>
+            </Helmet>
             <div className="banner">
                 <HomeBanner />
             </div>

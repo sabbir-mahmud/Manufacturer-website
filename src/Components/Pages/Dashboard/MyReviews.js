@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
@@ -35,6 +36,9 @@ const MyReviews = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>My Reviews</title>
+            </Helmet>
             <div className=" my-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
                 <h3 className='text-center font-bold pt-5'>Add a review</h3>
                 <form className='flex w-3/5 mx-auto' onSubmit={handleReviewSubmit} >

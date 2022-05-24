@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -53,6 +54,9 @@ const AddProduct = () => {
 
     return (
         <div className='mb-24 mt-14'>
+            <Helmet>
+                <title>Add Product</title>
+            </Helmet>
             <div className="title">
                 <h3 className='text-2xl my-9 font-bold text-center'>Add Products</h3>
             </div>

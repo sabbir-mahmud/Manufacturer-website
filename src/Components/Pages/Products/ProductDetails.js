@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -46,17 +47,15 @@ const ProductDetails = () => {
                     } else {
                         toast.error(result.message);
                     }
-
-
                 })
-
         }
-
-
     }
 
     return (
         <div>
+            <Helmet>
+                <title>{product?.name}</title>
+            </Helmet>
             <div className="hero min-h-screen bg-base-100">
                 <div className="hero-content flex-col lg:flex-row">
                     <img src={product?.img} className="max-w-sm rounded-lg mr-14" alt='' />

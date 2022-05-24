@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import useLogin from '../../Hooks/useFirebase.js/useLogin';
 import useSocial from '../../Hooks/useFirebase.js/useSocial';
 
@@ -7,6 +8,9 @@ const Login = () => {
     const { handleFacebookLogin, handleGoogleSignIn, handleGithubLogin } = useSocial();
     return (
         <div className='container mx-auto mb-24'>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
             <div className="shadow-md rounded-lg py-14">
                 <div className="title">
                     <h3 className='text-center text-4xl font-bold text-primary  mb-14'>Log in to your account!</h3>

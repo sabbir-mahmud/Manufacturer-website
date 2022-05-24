@@ -1,6 +1,7 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
@@ -13,6 +14,9 @@ const Payment = () => {
     const stripePromise = loadStripe('pk_test_51L0hxlEZlpATTp01pmVfH39AEz88vRS3gtaq24IKt7ycF15zlpMhZYIslPdUBDv76JJI2LOqh2gs9c5vARhhNRSu00W1WaO6Vd');
     return (
         <div className='px-14'>
+            <Helmet>
+                <title>Payment</title>
+            </Helmet>
             <div className="card w-50 max-w-md bg-base-100 shadow my-12">
                 <div className="card-body">
                     <p className="text-success font-bold">Hello, {user?.displayName} </p>

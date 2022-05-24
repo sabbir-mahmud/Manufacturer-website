@@ -1,17 +1,13 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
-import useAdmin from '../../../Hooks/useAdmin/useAdmin';
-import useUser from '../../../Hooks/useFirebase.js/useUser';
 import Loading from '../../Shared/Loading/Loading';
 
 const Users = () => {
-    const { user } = useUser();
     const { data: users, loading } = useQuery('users', () => fetch('http://localhost:5000/api/users').then(res => res.json()));
-    const { admin, adminLoading } = useAdmin(user);
-    console.log(admin, adminLoading);
 
-    if (loading || adminLoading) {
+    if (loading) {
         return <Loading />
     }
 
@@ -36,6 +32,9 @@ const Users = () => {
 
     return (
         <div className="overflow-x-auto">
+            <Helmet>
+                <title>Users</title>
+            </Helmet>
             <table className="table w-full">
                 <thead>
                     <tr>
@@ -51,9 +50,12 @@ const Users = () => {
                             return (
                                 <tr key={user._id} className="hover">
                                     <td>{user?.email}</td>
-                                    <td>Client</td>
-                                    <td><button>Remove user</button></td>
-                                    <td><button onClick={() => makeAdmin(user?.email)}>Make Admin</button></td>
+                                    <td>{user?.isAdmin ? 'admin' : 'client'}</td>
+                                    <td><button className='text-red-500 hover:underline hover:cursor-pointer'>Remove user</button></td>
+                                    <td>{
+                                        !user?.isAdmin && <button onClick={() => makeAdmin(user?.email)} className='text-orange-500 hover:underline hover:cursor-pointer'>Make Admin</button>
+                                    }
+                                    </td>
                                 </tr>
                             )
                         })
