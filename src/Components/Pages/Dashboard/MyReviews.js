@@ -1,13 +1,18 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const MyReviews = () => {
     const { user } = useUser();
+    const { data: userData } = useQuery(user?.email, () => fetch(`http://localhost:5000/api/users/profile/${user?.email}`).then(res => res.json()));
+    console.log(userData);
     const handleReviewSubmit = e => {
         e.preventDefault();
         const review = {
             name: user?.displayName,
+            img: userData?.avatar || 'https://api.lorem.space/image/face?hash=92310',
+            bio: userData?.bio || 'Web Developer',
             location: e.target.location.value,
             starts: e.target.start.value,
             review: e.target.review.value,
@@ -26,7 +31,6 @@ const MyReviews = () => {
                     e.target.reset();
                     toast.success('Review added successfully');
                 }
-                console.log(result);
             })
     }
     return (

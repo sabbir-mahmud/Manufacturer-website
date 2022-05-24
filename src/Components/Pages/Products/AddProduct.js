@@ -1,10 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
     const {
         register,
-        handleSubmit,
+        handleSubmit, reset
     } = useForm();
     const imageStorageKey = 'd6cf365aabe2ff86e40fafe5d6f330c1'
 
@@ -39,7 +40,12 @@ const AddProduct = () => {
                         body: JSON.stringify(product),
                     })
                         .then(res => res.json())
-                        .then(result => console.log(result))
+                        .then(result => {
+                            if (result.insertedId) {
+                                toast.info('Product Added Successfully');
+                                reset();
+                            }
+                        })
                 }
             })
 

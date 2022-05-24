@@ -11,7 +11,7 @@ const HomeProducts = () => {
     });
     return (
         <div>
-            <div className='mb-16'>
+            <div className='mb-24'>
                 <h2 className='text-4xl text-primary font-bold text-center'>Our Products</h2>
             </div>
             <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -22,9 +22,6 @@ const HomeProducts = () => {
                     >
                     </HomeProduct>)
                 }
-            </div>
-            <div className='mt-12 mb-24'>
-                <Link className='bg-primary text-white px-5 py-3 rounded-md shadow text-uppercase' to='/'>Browse Products</Link>
             </div>
 
         </div>
