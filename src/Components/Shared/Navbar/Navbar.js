@@ -7,7 +7,13 @@ import CustomLink from './CustomLink';
 const Navbar = () => {
     const { user, loading, handleLogout } = useUser();
     const { data: userDetails, isLoading } = useQuery(['userDetails', user.uid], () => {
-        return fetch(`http://localhost:5000/api/users/profile/${user.email}`).then(res => res.json());
+        return fetch(`http://localhost:5000/api/users/profile/${user?.email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        }).then(res => res.json());
     })
 
     const img = 'https://api.lorem.space/image/face?hash=33791'
@@ -15,13 +21,18 @@ const Navbar = () => {
     const menuLinks = <>
         <li><CustomLink to='/'>Home</CustomLink></li>
         <li><CustomLink to='/products'>Products</CustomLink></li>
-        <li><CustomLink to='/dashboard'>Dashboard</CustomLink></li>
+        {
+            user?.uid && <li><CustomLink to='/dashboard'>Dashboard</CustomLink></li>
+        }
+
         <li><CustomLink to='/blogs'>Blogs</CustomLink></li>
     </>
     const MobileLinks = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/products'>Products</Link></li>
-        <li><Link to='/dashboard'>Dashboard</Link></li>
+        {
+            user?.uid && <li><Link to='/dashboard'>Dashboard</Link></li>
+        }
         <li><Link to='/blogs'>Blogs</Link></li>
     </>
     return (

@@ -43,10 +43,11 @@ const Orders = () => {
                 <thead>
                     <tr>
                         <th>Product Name</th>
+                        <th>Phone</th>
                         <th>Price</th>
-                        <th>Order ID</th>
+                        <th>Location</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>Payment</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,12 +57,13 @@ const Orders = () => {
                             return (
                                 <tr key={order?._id} className="hover">
                                     <td>{order?.productName}</td>
-                                    <td>{order?.price}</td>
+                                    <td>{order?.phone}</td>
+                                    <td>${order?.price}</td>
+                                    <td>${order?.address}</td>
                                     <td>{order?.status ? order?.status : 'pending'}</td>
-                                    <td>{order?._id}</td>
                                     <td>
                                         {
-                                            order?.paid ? <p className='text-green-500'>Paid</p> :
+                                            order?.paid ? <p className='text-green-500'>{order?.transactionId}</p> :
                                                 <>
                                                     <label onClick={() => setCancel(order)} htmlFor="user-delete-order" className="text-red-500 hover:cursor-pointer hover:underline">Cancel</label>
                                                     <Link className='mx-2 text-green-500 hover:underline' to={`/dashboard/payment/${order?._id}`}>pay</Link>

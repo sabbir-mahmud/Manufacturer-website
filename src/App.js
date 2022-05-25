@@ -25,6 +25,7 @@ import RequireUser from './Components/Auth/RequireUser';
 import RequireAdmin from './Components/Auth/RequireAdmin';
 import ManageProduct from './Components/Pages/Dashboard/ManageProduct';
 import EditProduct from './Components/Pages/Dashboard/EditProduct';
+import Blog from './Components/Pages/Blogs/Blogs';
 
 function App() {
   const { user } = useUser();
@@ -50,6 +51,7 @@ function App() {
           <Route path="manage-Product" element={<RequireAdmin><ManageProduct /></RequireAdmin>} />
           <Route path="manage-Product/:id" element={<RequireAdmin><EditProduct /></RequireAdmin>} />
         </Route>
+        <Route path="blogs" element={<Blog />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound></NotFound>} />

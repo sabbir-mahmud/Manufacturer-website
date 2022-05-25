@@ -20,7 +20,7 @@ const MyReviews = () => {
 
         }
     }));
-    console.log(userData);
+
     const handleReviewSubmit = e => {
         e.preventDefault();
         const review = {
@@ -31,7 +31,6 @@ const MyReviews = () => {
             starts: e.target.start.value,
             review: e.target.review.value,
         }
-        console.log(review);
         fetch('http://localhost:5000/api/review', {
             method: 'POST',
             headers: {
