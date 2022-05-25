@@ -43,9 +43,17 @@ const EditProfile = () => {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
+                        'authorization': `Bearer ${localStorage.getItem("accessToken")}`
                     },
                     body: JSON.stringify(userProfile),
-                }).then(res => res.json()).then(result => { toast.info('Profile Updated'); reset() });
+                }).then(res => {
+                    if (res.status === 401 || res.status === 403) {
+                        return toast.error('You are not authorized to perform this action');
+                    } else {
+                        return res.json();
+
+                    }
+                }).then(result => { toast.info('Profile Updated'); reset() });
             }
         })
 

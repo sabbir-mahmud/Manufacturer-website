@@ -6,7 +6,8 @@ const ShippedModal = ({ shipped, refetch, setShipped }) => {
         fetch(`http://localhost:5000/api/orders/shipped/${id}`, {
             method: "PATCH",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${localStorage.getItem("accessToken")}`
             },
             body: JSON.stringify(status)
         })

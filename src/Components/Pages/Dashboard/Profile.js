@@ -1,12 +1,26 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 import Loading from '../../Shared/Loading/Loading';
 
 const Profile = () => {
     const { user, loading } = useUser();
-    const { data: userDetails, loading: dataLoading } = useQuery(user.email, () => fetch(`http://localhost:5000/api/users/profile/${user.email}`).then(res => res.json()));
+    const { data: userDetails, loading: dataLoading } = useQuery(user.email, () => fetch(`http://localhost:5000/api/users/profile/${user.email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            return toast.error('You are not authorized to perform this action');
+        } else {
+            return res.json();
+
+        }
+    }));
 
     if (dataLoading || loading) {
         return <Loading />

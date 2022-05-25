@@ -7,7 +7,14 @@ const useAdmin = user => {
     useEffect(() => {
         const email = user?.email;
         if (email) {
-            fetch(`http://localhost:5000/api/admin?email=${email}`)
+            fetch(`http://localhost:5000/api/admin?email=${email}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+
+            })
                 .then(res => res.json())
                 .then(data => {
                     if (data.role === "admin") {

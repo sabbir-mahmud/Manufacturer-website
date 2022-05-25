@@ -11,7 +11,7 @@ const generateToken = async (email) => {
         .then((data) => {
             console.log(data);
             const token = data.accessToken;
-            localStorage.setItem(email, token);
+            localStorage.setItem('accessToken', token);
         });
 
 };

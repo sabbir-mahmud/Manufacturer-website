@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const CheckOutForm = ({ order }) => {
     const stripe = useStripe();
@@ -17,10 +18,18 @@ const CheckOutForm = ({ order }) => {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
+                    "authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 },
                 body: JSON.stringify({ pay })
             })
-                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 401 || res.status === 403) {
+                        return toast.error('You are not authorized to perform this action');
+                    } else {
+                        return res.json();
+
+                    }
+                })
                 .then(data => {
                     if (data?.clientSecret) {
                         setClientSecret(data.clientSecret);
@@ -97,8 +106,6 @@ const CheckOutForm = ({ order }) => {
                     console.log(data);
                 })
         }
-
-        console.log(paymentIntent);
 
     };
     return (

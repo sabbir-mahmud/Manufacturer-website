@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const useUser = () => {
@@ -29,7 +29,7 @@ const useUser = () => {
 
 
     const handleLogout = () => {
-        // localStorage.removeItem(user.email)
+        localStorage.removeItem('accessToken')
         auth.signOut();
         navigate('/login')
         setUser({});

@@ -1,11 +1,23 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const OrderDelete = ({ deleted, refetch, setDeleted }) => {
     const handleOrderCancel = (orderId) => {
         fetch(`http://localhost:5000/api/orders/${orderId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    return toast.error('You are not authorized to perform this action');
+                } else {
+                    return res.json();
+
+                }
+            })
             .then(res => console.log(res));
         refetch();
         setDeleted({});

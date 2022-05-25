@@ -10,7 +10,13 @@ import CheckOutForm from './CheckOutForm';
 const Payment = () => {
     const { id } = useParams();
     const { user } = useUser();
-    const { data: order } = useQuery(["order", id], () => fetch(`http://localhost:5000/api/order/${id}`).then(res => res.json()));
+    const { data: order } = useQuery(["order", id], () => fetch(`http://localhost:5000/api/order/${id}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    }).then(res => res.json()));
     const stripePromise = loadStripe('pk_test_51L0hxlEZlpATTp01pmVfH39AEz88vRS3gtaq24IKt7ycF15zlpMhZYIslPdUBDv76JJI2LOqh2gs9c5vARhhNRSu00W1WaO6Vd');
     return (
         <div className='px-14'>

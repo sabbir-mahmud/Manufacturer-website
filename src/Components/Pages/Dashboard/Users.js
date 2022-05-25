@@ -5,7 +5,13 @@ import { toast } from 'react-toastify';
 import Loading from '../../Shared/Loading/Loading';
 
 const Users = () => {
-    const { data: users, loading } = useQuery('users', () => fetch('http://localhost:5000/api/users').then(res => res.json()));
+    const { data: users, loading } = useQuery('users', () => fetch('http://localhost:5000/api/users', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        },
+    }).then(res => res.json()));
 
     if (loading) {
         return <Loading />
@@ -16,7 +22,8 @@ const Users = () => {
             fetch(`http://localhost:5000/api/admin`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    "authorization": `Bearer ${localStorage.getItem("accessToken")}`
                 },
                 body: JSON.stringify({ email })
             })

@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import OrderDelete from './OrderDelete';
 import ShippedModal from './ShipeedModal';
 
 const ManageOrder = () => {
-    const { data: orders, refetch } = useQuery("orders", () => fetch("http://localhost:5000/api/orders").then(res => res.json()));
+    const { data: orders, refetch } = useQuery("orders", () => fetch("http://localhost:5000/api/orders", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            return toast.error('You are not authorized to perform this action');
+        } else {
+            return res.json();
+
+        }
+    }));
     const [deleted, setDeleted] = useState({});
     const [shipped, setShipped] = useState({});
 

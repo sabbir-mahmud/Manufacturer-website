@@ -4,7 +4,11 @@ import { toast } from 'react-toastify';
 const UserOrderDelete = ({ cancel, refetch, setCancel }) => {
     const handleOrderCancel = (orderId) => {
         fetch(`http://localhost:5000/api/user/orders/${orderId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
         })
             .then(res => res.json())
             .then(res => toast.info('Order Cancelled'));

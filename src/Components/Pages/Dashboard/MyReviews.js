@@ -6,7 +6,20 @@ import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const MyReviews = () => {
     const { user } = useUser();
-    const { data: userData } = useQuery(user?.email, () => fetch(`http://localhost:5000/api/users/profile/${user?.email}`).then(res => res.json()));
+    const { data: userData } = useQuery(user?.email, () => fetch(`http://localhost:5000/api/users/profile/${user?.email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            return toast.error('You are not authorized to perform this action');
+        } else {
+            return res.json();
+
+        }
+    }));
     console.log(userData);
     const handleReviewSubmit = e => {
         e.preventDefault();
@@ -23,10 +36,18 @@ const MyReviews = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "authorization": `Bearer ${localStorage.getItem("accessToken")}`
             },
             body: JSON.stringify(review),
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    return toast.error('You are not authorized to perform this action');
+                } else {
+                    return res.json();
+
+                }
+            })
             .then(result => {
                 if (result.insertedId) {
                     e.target.reset();
