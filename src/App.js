@@ -26,6 +26,7 @@ import RequireAdmin from './Components/Auth/RequireAdmin';
 import ManageProduct from './Components/Pages/Dashboard/ManageProduct';
 import EditProduct from './Components/Pages/Dashboard/EditProduct';
 import Blog from './Components/Pages/Blogs/Blogs';
+import Portfolio from './Components/Pages/Portfolio/Portfolio';
 
 function App() {
   const { user } = useUser();
@@ -41,7 +42,6 @@ function App() {
           {
             admin ? <Route index element={<RequireAdmin><ManageOrder /></RequireAdmin>} /> : <Route index element={<Orders />} />
           }
-
           <Route path="myReviews" element={<MyReviews />} />
           <Route path="payment/:id" element={<Payment />} />
           <Route path="profile" element={<Profile />} />
@@ -52,6 +52,7 @@ function App() {
           <Route path="manage-Product/:id" element={<RequireAdmin><EditProduct /></RequireAdmin>} />
         </Route>
         <Route path="blogs" element={<Blog />} />
+        <Route path="portfolio" element={<Portfolio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound></NotFound>} />

@@ -5,8 +5,8 @@ import useUser from '../../../Hooks/useFirebase.js/useUser';
 import CustomLink from './CustomLink';
 
 const Navbar = () => {
-    const { user, loading, handleLogout } = useUser();
-    const { data: userDetails, isLoading } = useQuery(['userDetails', user.uid], () => {
+    const { user, handleLogout } = useUser();
+    const { data: userDetails } = useQuery(['userDetails', user.uid], () => {
         return fetch(`http://localhost:5000/api/users/profile/${user?.email}`, {
             method: 'GET',
             headers: {
@@ -21,19 +21,22 @@ const Navbar = () => {
     const menuLinks = <>
         <li><CustomLink to='/'>Home</CustomLink></li>
         <li><CustomLink to='/products'>Products</CustomLink></li>
+        <li><CustomLink to='/blogs'>Blogs</CustomLink></li>
+        <li><CustomLink to='/portfolio'>Portfolio</CustomLink></li>
         {
             user?.uid && <li><CustomLink to='/dashboard'>Dashboard</CustomLink></li>
         }
 
-        <li><CustomLink to='/blogs'>Blogs</CustomLink></li>
+
     </>
     const MobileLinks = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/products'>Products</Link></li>
+        <li><Link to='/blogs'>Blogs</Link></li>
+        <li><Link to='/portfolio'>Portfolio</Link></li>
         {
             user?.uid && <li><Link to='/dashboard'>Dashboard</Link></li>
         }
-        <li><Link to='/blogs'>Blogs</Link></li>
     </>
     return (
         <section className="bg-neutral">
