@@ -9,7 +9,7 @@ import UserOrderDelete from './UserOrderDelete';
 const Orders = () => {
     const { user } = useUser();
     let { data: order, refetch } = useQuery(["order", user.email], () => {
-        return fetch(`http://localhost:5000/api/order/?email=${user.email}`, {
+        return fetch(`https://young-garden-78103.herokuapp.com/api/order/?email=${user.email}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

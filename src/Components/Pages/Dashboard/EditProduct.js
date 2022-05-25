@@ -2,10 +2,11 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const EditProduct = () => {
     const { id } = useParams();
-    const { data: product } = useQuery(['editProduct', id], () => fetch(`http://localhost:5000/api/products/${id}`).then(res => res.json()));
+    const { data: product } = useQuery(['editProduct', id], () => fetch(`https://young-garden-78103.herokuapp.com/api/products/${id}`).then(res => res.json()));
     const imageStorageKey = 'd6cf365aabe2ff86e40fafe5d6f330c1'
 
     const handleProductUpdate = async (e) => {
@@ -41,7 +42,7 @@ const EditProduct = () => {
             type: e.target.type.value || product?.type,
             img: e.target.img.value || product?.img,
         }
-        fetch(`http://localhost:5000/api/products/${id}`, {
+        fetch(`https://young-garden-78103.herokuapp.com/api/products/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +52,10 @@ const EditProduct = () => {
         })
             .then(res => res.json())
             .then(result => {
-                console.log(result);
+                if (result.acknowledged) {
+                    toast.info('Product Updated Successfully');
+                    e.target.reset();
+                }
             })
     }
     return (

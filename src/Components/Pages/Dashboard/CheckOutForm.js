@@ -14,7 +14,7 @@ const CheckOutForm = ({ order }) => {
     useEffect(() => {
 
         if (pay) {
-            fetch('http://localhost:5000/create-payment-intent', {
+            fetch('https://young-garden-78103.herokuapp.com/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -93,7 +93,7 @@ const CheckOutForm = ({ order }) => {
                 product: order.product,
                 transactionId: paymentIntent.id
             }
-            fetch(`http://localhost:5000/api/order/${order._id}`, {
+            fetch(`https://young-garden-78103.herokuapp.com/api/order/${order._id}`, {
                 method: 'PATCH',
                 headers: {
                     'content-type': 'application/json',

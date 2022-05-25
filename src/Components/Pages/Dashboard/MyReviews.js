@@ -6,7 +6,7 @@ import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const MyReviews = () => {
     const { user } = useUser();
-    const { data: userData } = useQuery(user?.email, () => fetch(`http://localhost:5000/api/users/profile/${user?.email}`, {
+    const { data: userData } = useQuery(user?.email, () => fetch(`https://young-garden-78103.herokuapp.com/api/users/profile/${user?.email}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ const MyReviews = () => {
             starts: e.target.start.value,
             review: e.target.review.value,
         }
-        fetch('http://localhost:5000/api/review', {
+        fetch('https://young-garden-78103.herokuapp.com/api/review', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

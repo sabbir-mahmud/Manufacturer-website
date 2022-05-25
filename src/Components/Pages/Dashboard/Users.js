@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Loading from '../../Shared/Loading/Loading';
 
 const Users = () => {
-    const { data: users, loading } = useQuery('users', () => fetch('http://localhost:5000/api/users', {
+    const { data: users, loading } = useQuery('users', () => fetch('https://young-garden-78103.herokuapp.com/api/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const Users = () => {
 
     const makeAdmin = (email) => {
         if (email) {
-            fetch(`http://localhost:5000/api/admin`, {
+            fetch(`https://young-garden-78103.herokuapp.com/api/admin`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

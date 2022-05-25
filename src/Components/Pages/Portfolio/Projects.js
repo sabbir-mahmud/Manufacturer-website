@@ -4,7 +4,7 @@ import Loading from '../../Shared/Loading/Loading';
 import ProjectCard from './ProjectCard';
 
 const Projects = () => {
-    const { data: projects, isLoading } = useQuery('projects', () => fetch('http://localhost:5000/api/portfolio').then(res => res.json()));
+    const { data: projects, isLoading } = useQuery('projects', () => fetch('https://young-garden-78103.herokuapp.com/api/portfolio').then(res => res.json()));
 
     if (isLoading) {
         return <Loading />

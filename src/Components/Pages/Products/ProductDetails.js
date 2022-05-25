@@ -10,7 +10,7 @@ const ProductDetails = () => {
     const { user } = useUser();
     const { id } = useParams();
     const { data: product, refetch } = useQuery(['product', id], () => {
-        return fetch(`http://localhost:5000/api/products/${id}`)
+        return fetch(`https://young-garden-78103.herokuapp.com/api/products/${id}`)
             .then(res => res.json());
     })
 
@@ -36,7 +36,7 @@ const ProductDetails = () => {
             address: e.target.address.value,
             phone: e.target.phone.value,
         }
-        fetch('http://localhost:5000/api/order', {
+        fetch('https://young-garden-78103.herokuapp.com/api/order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

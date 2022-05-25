@@ -4,7 +4,7 @@ import Review from './Review';
 
 const Reviews = () => {
     const { data: reviews } = useQuery('reviews', () => {
-        return fetch('http://localhost:5000/api/home/review').then(res => res.json());
+        return fetch('https://young-garden-78103.herokuapp.com/api/home/review').then(res => res.json());
     });
     return (
         <div className="mb-5 mt-24">

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const UserOrderDelete = ({ cancel, refetch, setCancel }) => {
     const handleOrderCancel = (orderId) => {
-        fetch(`http://localhost:5000/api/user/orders/${orderId}`, {
+        fetch(`https://young-garden-78103.herokuapp.com/api/user/orders/${orderId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

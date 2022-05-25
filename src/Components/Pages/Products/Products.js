@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import HomeProduct from '../Home/HomeProduct';
 
 const Products = () => {
-    const { data: products } = useQuery('allProducts', () => fetch('http://localhost:5000/api/products').then(res => res.json()));
+    const { data: products } = useQuery('allProducts', () => fetch('https://young-garden-78103.herokuapp.com/api/products').then(res => res.json()));
     return (
         <div className="container mx-auto my-14">
             <Helmet>

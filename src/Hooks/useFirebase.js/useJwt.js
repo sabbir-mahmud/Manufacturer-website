@@ -1,5 +1,5 @@
 const generateToken = async (email) => {
-    const url = `http://localhost:5000/api/login`
+    const url = `https://young-garden-78103.herokuapp.com/api/login`
     fetch(url, {
         method: "PUT",
         headers: {

@@ -3,7 +3,7 @@ import React from 'react';
 const ShippedModal = ({ shipped, refetch, setShipped }) => {
     const handleShipped = (id) => {
         const status = { status: "shipped" };
-        fetch(`http://localhost:5000/api/orders/shipped/${id}`, {
+        fetch(`https://young-garden-78103.herokuapp.com/api/orders/shipped/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

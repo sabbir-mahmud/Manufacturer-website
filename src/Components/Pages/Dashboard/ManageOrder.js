@@ -6,7 +6,7 @@ import OrderDelete from './OrderDelete';
 import ShippedModal from './ShipeedModal';
 
 const ManageOrder = () => {
-    const { data: orders, refetch } = useQuery("orders", () => fetch("http://localhost:5000/api/orders", {
+    const { data: orders, refetch } = useQuery("orders", () => fetch("https://young-garden-78103.herokuapp.com/api/orders", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

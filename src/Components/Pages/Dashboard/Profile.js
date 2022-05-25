@@ -7,7 +7,7 @@ import Loading from '../../Shared/Loading/Loading';
 
 const Profile = () => {
     const { user, loading } = useUser();
-    const { data: userDetails, loading: dataLoading } = useQuery(user.email, () => fetch(`http://localhost:5000/api/users/profile/${user.email}`, {
+    const { data: userDetails, loading: dataLoading } = useQuery(user.email, () => fetch(`https://young-garden-78103.herokuapp.com/api/users/profile/${user.email}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

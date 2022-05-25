@@ -10,7 +10,7 @@ import CheckOutForm from './CheckOutForm';
 const Payment = () => {
     const { id } = useParams();
     const { user } = useUser();
-    const { data: order } = useQuery(["order", id], () => fetch(`http://localhost:5000/api/order/${id}`, {
+    const { data: order } = useQuery(["order", id], () => fetch(`https://young-garden-78103.herokuapp.com/api/order/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -31,8 +31,8 @@ const Payment = () => {
                     <p>Please pay: ${order?.pay}</p>
                 </div>
             </div>
-            <div class="card flex-shrink-0 w-50 max-w-md shadow bg-base-100">
-                <div class="card-body">
+            <div className="card flex-shrink-0 w-50 max-w-md shadow bg-base-100">
+                <div className="card-body">
                     <Elements stripe={stripePromise}>
                         <CheckOutForm order={order} />
                     </Elements>

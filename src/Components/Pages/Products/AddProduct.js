@@ -33,7 +33,7 @@ const AddProduct = () => {
                         type: data.type,
                         img: img,
                     }
-                    fetch('http://localhost:5000/api/products', {
+                    fetch('https://young-garden-78103.herokuapp.com/api/products', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

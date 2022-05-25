@@ -7,7 +7,7 @@ import CustomLink from './CustomLink';
 const Navbar = () => {
     const { user, handleLogout } = useUser();
     const { data: userDetails } = useQuery(['userDetails', user.uid], () => {
-        return fetch(`http://localhost:5000/api/users/profile/${user?.email}`, {
+        return fetch(`https://young-garden-78103.herokuapp.com/api/users/profile/${user?.email}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,9 +65,10 @@ const Navbar = () => {
                             </div>
                         </label>
                         <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+
                             <li>
                                 <Link to='/dashboard/profile' className="justify-between">
-                                    Profile
+                                    {user ? user?.displayName : 'user name'}
                                 </Link>
                             </li>
                             <li><Link to='/dashboard/settings'>Settings</Link></li>

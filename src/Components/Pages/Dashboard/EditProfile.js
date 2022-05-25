@@ -39,7 +39,7 @@ const EditProfile = () => {
                     github: data.github,
                     avatar: img,
                 }
-                fetch('http://localhost:5000/api/users/profile', {
+                fetch('https://young-garden-78103.herokuapp.com/api/users/profile', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
