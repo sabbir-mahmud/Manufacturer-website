@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const ProductDetails = () => {
+    const [btnDisable, setBtnDisable] = useState(false);
     const { user } = useUser();
     const { id } = useParams();
     const { data: product, refetch } = useQuery(['product', id], () => {
@@ -13,44 +14,49 @@ const ProductDetails = () => {
             .then(res => res.json());
     })
 
+    const handleBtn = (e) => {
+        let qtn = parseInt(e.target.value);
+        let productQtn = parseInt(product.quantity);
+        if (qtn > productQtn || qtn <= 100) {
+            setBtnDisable(true);
+        } else {
+            setBtnDisable(false);
+        }
+
+    }
+
     const handleOrderSubmit = e => {
         e.preventDefault();
-        let qtn = parseInt(e.target.elements.quantity.value);
-        let productQtn = parseInt(product.Quantity);
-        if (qtn > productQtn) {
-            toast.info('Quantity is not available');
-        } else if (qtn <= 100) {
-            toast.info('Quantity should be more than 100');
+        const order = {
+            user: user.email,
+            productName: product.name,
+            product: product._id,
+            price: product.price,
+            quantity: e.target.quantity.value,
+            address: e.target.address.value,
+            phone: e.target.phone.value,
         }
-        else {
-            const order = {
-                user: user.email,
-                productName: product.name,
-                product: product._id,
-                price: product.price,
-                quantity: e.target.quantity.value,
-            }
-            fetch('http://localhost:5000/api/order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': `Bearer ${localStorage.getItem("accessToken")}`
-                },
-                body: JSON.stringify(order),
+        fetch('http://localhost:5000/api/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem("accessToken")}`
+            },
+            body: JSON.stringify(order),
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                if (result.insertedId) {
+                    toast.success('Order placed successfully');
+                    e.target.reset();
+                    refetch();
+                } else {
+                    toast.error(result.message);
+                }
             })
-                .then(res => res.json())
-                .then(result => {
-                    console.log(result);
-                    if (result.insertedId) {
-                        toast.success('Order placed successfully');
-                        e.target.reset();
-                        refetch();
-                    } else {
-                        toast.error(result.message);
-                    }
-                })
-        }
     }
+
 
     return (
         <div>
@@ -92,10 +98,22 @@ const ProductDetails = () => {
                             <label className="label">
                                 <span className="label-text">Order Quantity</span>
                             </label>
-                            <input type="number" name='quantity' placeholder='100' className="input input-bordered" />
+                            <input onChange={handleBtn} type="number" name='quantity' placeholder='100' className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Phone Number</span>
+                            </label>
+                            <input type="number" name='phone' placeholder='+8801782888241' className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Address</span>
+                            </label>
+                            <input type="text" name='address' placeholder='Dhaka, Bangladesh' className="input input-bordered" />
                         </div>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Order</button>
+                            <button disabled={btnDisable} className="btn btn-primary">Order</button>
                         </div>
                     </div>
                 </form>

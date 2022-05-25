@@ -1,0 +1,99 @@
+import React from 'react';
+import Helmet from 'react-helmet';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+
+const EditProduct = () => {
+    const { id } = useParams();
+    const { data: product } = useQuery(['editProduct', id], () => fetch(`http://localhost:5000/api/products/${id}`).then(res => res.json()));
+    const imageStorageKey = 'd6cf365aabe2ff86e40fafe5d6f330c1'
+
+    const handleProductUpdate = async (e) => {
+        e.preventDefault();
+        let image = e.target.img.files[0];
+        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+        if (image) {
+            console.log('images new');
+            const formData = new FormData();
+            formData.append('image', image);
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        image = result.data.url;
+                    }
+                })
+
+        } else {
+            console.log('images old');
+            image = product.img;
+        }
+        const data = {
+            brand: 'Mikrotik',
+            name: e.target.productName.value || product?.productName,
+            model: e.target.model.value || product?.model,
+            price: e.target.price.value || product?.price,
+            weight: e.target.weight.value || product?.weight,
+            quantity: e.target.Quantity.value || product?.Quantity,
+            type: e.target.type.value || product?.type,
+            img: e.target.img.value || product?.img,
+        }
+        fetch(`http://localhost:5000/api/products/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem("accessToken")}`
+            },
+            body: JSON.stringify(data),
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+            })
+    }
+    return (
+        <div>
+            <Helmet>
+                <title>Edit Product</title>
+            </Helmet>
+
+            <form onSubmit={handleProductUpdate}>
+                <div className="w-3/4 mx-auto card  shadow-2xl bg-base-100">
+                    <div className="card-body">
+                        <div className="form-control">
+                            <input type="text" placeholder={product?.name} name='productName' className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="text" name='model' placeholder={product?.model} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="text" name='type' placeholder={product?.type} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="number" name='weight' placeholder={product?.weight} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="number" name='price' placeholder={product?.price} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="number" name='Quantity' placeholder={product?.quantity} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="file" name='img' placeholder="img: Upload file" className="input py-2 input-bordered" />
+                        </div>
+
+                        <div className="form-control mt-6">
+                            <input className='btn btn-primary' type="submit" value="Submit" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    );
+};
+
+export default EditProduct;

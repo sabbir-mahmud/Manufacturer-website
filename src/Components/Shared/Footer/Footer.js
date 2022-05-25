@@ -12,7 +12,6 @@ const Footer = () => {
                 <span className="footer-title">Links</span>
                 <Link to='/' className="link link-hover">Home</Link>
                 <Link to='/products' className="link link-hover">Products</Link>
-                <Link to='/dashboard' className="link link-hover">Dashboard</Link>
             </div>
             <div>
                 <span className="footer-title">useful links</span>

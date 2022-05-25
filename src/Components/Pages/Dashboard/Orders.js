@@ -8,7 +8,6 @@ import UserOrderDelete from './UserOrderDelete';
 
 const Orders = () => {
     const { user } = useUser();
-    console.log(localStorage.getItem("accessToken"));
     let { data: order, refetch } = useQuery(["order", user.email], () => {
         return fetch(`http://localhost:5000/api/order/?email=${user.email}`, {
             method: "GET",

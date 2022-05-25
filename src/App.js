@@ -23,6 +23,8 @@ import useAdmin from './Hooks/useAdmin/useAdmin';
 import useUser from './Hooks/useFirebase.js/useUser';
 import RequireUser from './Components/Auth/RequireUser';
 import RequireAdmin from './Components/Auth/RequireAdmin';
+import ManageProduct from './Components/Pages/Dashboard/ManageProduct';
+import EditProduct from './Components/Pages/Dashboard/EditProduct';
 
 function App() {
   const { user } = useUser();
@@ -45,6 +47,8 @@ function App() {
           <Route path="settings" element={<EditProfile />} />
           <Route path="users" element={<RequireAdmin><Users /></RequireAdmin>} />
           <Route path="addProduct" element={<RequireAdmin><AddProduct /></RequireAdmin>} />
+          <Route path="manage-Product" element={<RequireAdmin><ManageProduct /></RequireAdmin>} />
+          <Route path="manage-Product/:id" element={<RequireAdmin><EditProduct /></RequireAdmin>} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
