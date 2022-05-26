@@ -30,9 +30,12 @@ const AddProduct = () => {
                         price: data.price,
                         weight: data.weight,
                         quantity: data.Quantity,
+                        minOrder: data.minOrder,
+                        description: data.description,
                         type: data.type,
                         img: img,
                     }
+                    console.log(product);
                     fetch('https://young-garden-78103.herokuapp.com/api/products', {
                         method: 'POST',
                         headers: {
@@ -74,13 +77,19 @@ const AddProduct = () => {
                             <input type="text"  {...register('type')} name='type' placeholder="Type: PCB" className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="number"  {...register('weight')} name='weight' placeholder="weight: 0.3" className="input input-bordered" />
+                            <input type="number" step="0.1"  {...register('weight')} name='weight' placeholder="weight: 0.3" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <input type="number"  {...register('price')} name='price' placeholder="price: 49" className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="number"  {...register('Quantity')} name='Quantity' placeholder="Quantity: 490943" className="input input-bordered" />
+                            <input type="number" step="0.1" {...register('Quantity')} name='Quantity' placeholder="Quantity: 490943" className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="number" step="0.1" {...register('minOrder')} name='minOrder' placeholder="min order: 53" className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="text"  {...register('description')} name='description' placeholder="description: this product use" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <input type="file"  {...register('img')} name='img' placeholder="img: Upload file" className="input py-2 input-bordered" />

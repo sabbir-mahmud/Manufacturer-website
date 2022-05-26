@@ -17,7 +17,8 @@ const ProductDetails = () => {
     const handleBtn = (e) => {
         let qtn = parseInt(e.target.value);
         let productQtn = parseInt(product.quantity);
-        if (qtn > productQtn || qtn <= 100) {
+        let minOrder = parseInt(product.minOrder);
+        if (qtn > productQtn || qtn <= minOrder - 1) {
             setBtnDisable(true);
         } else {
             setBtnDisable(false);
@@ -71,6 +72,7 @@ const ProductDetails = () => {
                         <h1 className="text-2xl font-bold">Name: {product?.name}</h1>
                         <p className="py-1">Model: {product?.model}</p>
                         <p className="py-1">Quantity: {product?.quantity}</p>
+                        <p className="py-1">Min order quantity: {product?.minOrder}</p>
                         <p className="py-1">Price: {product?.price}</p>
                     </div>
                 </div>

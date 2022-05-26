@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import Loading from '../../Shared/Loading/Loading';
+import UserDelModal from './UserDelModal';
 
 const Users = () => {
-    const { data: users, loading } = useQuery('users', () => fetch('https://young-garden-78103.herokuapp.com/api/users', {
+    const [userDel, setUserDel] = useState({});
+    const { data: users, loading, refetch } = useQuery('users', () => fetch('https://young-garden-78103.herokuapp.com/api/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -33,6 +35,7 @@ const Users = () => {
         } else {
             toast.error('user is not valid');
         }
+        refetch();
 
     }
 
@@ -42,6 +45,9 @@ const Users = () => {
             <Helmet>
                 <title>Users</title>
             </Helmet>
+            {
+                userDel._id && <UserDelModal userDel={userDel} setUserDel={setUserDel} refetch={refetch} />
+            }
             <table className="table w-full">
                 <thead>
                     <tr>
@@ -58,7 +64,7 @@ const Users = () => {
                                 <tr key={user._id} className="hover">
                                     <td>{user?.email}</td>
                                     <td>{user?.isAdmin ? 'admin' : 'client'}</td>
-                                    <td><button className='text-red-500 hover:underline hover:cursor-pointer'>Remove user</button></td>
+                                    <td><label htmlFor='user-delete' onClick={() => setUserDel(user)} className='text-red-500 hover:underline hover:cursor-pointer'>Remove user</label></td>
                                     <td>{
                                         !user?.isAdmin && <button onClick={() => makeAdmin(user?.email)} className='text-orange-500 hover:underline hover:cursor-pointer'>Make Admin</button>
                                     }

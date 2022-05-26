@@ -9,20 +9,20 @@ const Skills = () => {
             <div className="flex flex-col lg:flex-row items-center">
                 <div className="px-3">
                     <div className="client-side">
-                        <div className="flex flex-col lg:flex-row my-2">
+                        <div className="flex  lg:flex-row my-2">
                             <img className='my-3 lg:my-1 mx-2' src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="" />
                             <img className='my-3 lg:my-1 mx-2' src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="" />
                         </div>
                     </div>
                     <div className="programming-language">
-                        <div className="flex flex-col lg:flex-row my-2">
+                        <div className="flex  lg:flex-row my-2">
                             <img className='my-3 lg:my-1 mx-2' src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="" />
                             <img className='my-3 lg:my-1 mx-2' src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="" />
                             <img className='my-3 lg:my-1 mx-2' src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue" alt="" />
                         </div>
                     </div>
                     <div className="client-side-framework">
-                        <div className="flex flex-col lg:flex-row my-2">
+                        <div className="flex  lg:flex-row my-2">
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white" alt="" />
@@ -31,14 +31,14 @@ const Skills = () => {
                         </div>
                     </div>
                     <div className="frameworks-library">
-                        <div className="flex flex-col lg:flex-row my-2">
+                        <div className="flex lg:flex-row my-2">
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/django%20rest-ff1709?style=for-the-badge&logo=django&logoColor=white" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white" alt="" />
                         </div>
                     </div>
                     <div className="library">
-                        <div className="flex flex-col lg:flex-row my-2">
+                        <div className="flex  lg:flex-row my-2">
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black" alt="" />
@@ -48,7 +48,7 @@ const Skills = () => {
                     </div>
 
                     <div className="database">
-                        <div className="flex flex-col lg:flex-row my-2">
+                        <div className="flex lg:flex-row my-2">
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" alt="" />
                             <img className="my-3 lg:my-1 mx-2" src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="" />

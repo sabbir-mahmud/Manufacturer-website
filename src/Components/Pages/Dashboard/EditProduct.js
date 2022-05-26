@@ -41,6 +41,8 @@ const EditProduct = () => {
             quantity: e.target.Quantity.value || product?.Quantity,
             type: e.target.type.value || product?.type,
             img: e.target.img.value || product?.img,
+            minOrder: e.target.minOrder.value || product?.minOrder,
+            description: e.target.description.value || product?.description,
         }
         fetch(`https://young-garden-78103.herokuapp.com/api/products/${id}`, {
             method: 'PATCH',
@@ -68,22 +70,28 @@ const EditProduct = () => {
                 <div className="w-3/4 mx-auto card  shadow-2xl bg-base-100">
                     <div className="card-body">
                         <div className="form-control">
-                            <input type="text" placeholder={product?.name} name='productName' className="input input-bordered" />
+                            <input type="text" placeholder={`product name: ${product?.name}`} name='productName' className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="text" name='model' placeholder={product?.model} className="input input-bordered" />
+                            <input type="text" name='model' placeholder={`product model: ${product?.model}`} className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="text" name='type' placeholder={product?.type} className="input input-bordered" />
+                            <input type="text" name='type' placeholder={`type: ${product?.type}`} className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="number" name='weight' placeholder={product?.weight} className="input input-bordered" />
+                            <input type="number" step="0.1" name='weight' placeholder={`weight: ${product?.weight}`} className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="number" name='price' placeholder={product?.price} className="input input-bordered" />
+                            <input type="number" name='price' placeholder={`price: ${product?.price}`} className="input input-bordered" />
                         </div>
                         <div className="form-control">
-                            <input type="number" name='Quantity' placeholder={product?.quantity} className="input input-bordered" />
+                            <input type="number" name='Quantity' placeholder={`quantity: ${product?.quantity}`} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="number" name='minOrder' placeholder={`min order: ${product?.minOrder}`} className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <input type="number" name='description' placeholder={`description: ${product?.description}`} className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <input type="file" name='img' placeholder="img: Upload file" className="input py-2 input-bordered" />

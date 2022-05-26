@@ -33,7 +33,7 @@ const ManageProduct = () => {
     return (
         <div>
             <table className="table w-full">
-                {delProduct && <DeleteProductModal delProduct={delProduct} handleDelete={handleDelete} />}
+                {delProduct._id && <DeleteProductModal delProduct={delProduct} handleDelete={handleDelete} />}
                 <thead>
                     <tr>
                         <th>Product Name</th>

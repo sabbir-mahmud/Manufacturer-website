@@ -41,9 +41,9 @@ const Login = () => {
                         </div>
                     </form>
                     <div className="flex items-center justify-center mb-5 ">
-                        <button className='btn btn-primary mx-2 my-2' onClick={handleFacebookLogin}>Facebook</button>
-                        <button className='btn btn-primary mx-2 my-2' onClick={handleGoogleSignIn}>Google</button>
-                        <button className='btn btn-primary mx-2 my-2' onClick={handleGithubLogin}>Github</button>
+                        <button className='btn btn-primary lg:mx-2 my-2' onClick={handleFacebookLogin}>Facebook</button>
+                        <button className='btn btn-primary mx-1 lg:mx-2 my-2' onClick={handleGoogleSignIn}>Google</button>
+                        <button className='btn btn-primary lg:mx-2 my-2' onClick={handleGithubLogin}>Github</button>
                     </div>
                 </div>
             </div>

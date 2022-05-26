@@ -14,6 +14,8 @@ const HomeProduct = ({ product }) => {
                     <p>Price: {product.price}</p>
                     <p>Weight: {product.weight}</p>
                     <p>Quantity: {product.quantity}</p>
+                    <p>min order: {product.minOrder}</p>
+                    <p>Short Description: {product.description}</p>
                     <div className="card-actions justify-end">
                         <div className="badge badge-outline py-3 px-5">{product.type}</div>
                     </div>
