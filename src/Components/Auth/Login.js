@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom';
 import useLogin from '../../Hooks/useFirebase.js/useLogin';
 import useSocial from '../../Hooks/useFirebase.js/useSocial';
 
@@ -30,8 +31,7 @@ const Login = () => {
                                 </label>
                                 <input type="password" name='password' placeholder="password" className="input input-bordered" />
                                 <label className="label">
-                                    <a href="/" className="label-text-alt link link-hover">Forgot password?</a>
-                                    <a href="/" className="label-text-alt link link-hover">Create a account</a>
+                                    <Link to="/register" className="label-text-alt link link-hover">Create a account</Link>
                                 </label>
                             </div>
 

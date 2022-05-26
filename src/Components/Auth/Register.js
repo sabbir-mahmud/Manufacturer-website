@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom';
 import useRegister from '../../Hooks/useFirebase.js/useRegister';
 
 const Register = () => {
@@ -38,8 +39,7 @@ const Register = () => {
                                 </label>
                                 <input type="password" name='confirmPassword' placeholder="Confirm password" className="input input-bordered" />
                                 <label className="label">
-                                    <a href="/" className="label-text-alt link link-hover">Forgot password?</a>
-                                    <a href="/" className="label-text-alt link link-hover">Create a account</a>
+                                    <Link to="/login" className="label-text-alt link link-hover">all ready registered?</Link>
                                 </label>
                             </div>
 
