@@ -4,19 +4,28 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 import CheckOutForm from './CheckOutForm';
 
 const Payment = () => {
     const { id } = useParams();
-    const { user } = useUser();
+    const { user, handleLogout } = useUser();
     const { data: order } = useQuery(["order", id], () => fetch(`https://young-garden-78103.herokuapp.com/api/order/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             "authorization": `Bearer ${localStorage.getItem("accessToken")}`
         }
-    }).then(res => res.json()));
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            handleLogout();
+            return toast.error('You are not authorized to perform this action');
+        } else {
+            return res.json();
+
+        }
+    }));
     const stripePromise = loadStripe('pk_test_51L0hxlEZlpATTp01pmVfH39AEz88vRS3gtaq24IKt7ycF15zlpMhZYIslPdUBDv76JJI2LOqh2gs9c5vARhhNRSu00W1WaO6Vd');
     return (
         <div className='px-14'>

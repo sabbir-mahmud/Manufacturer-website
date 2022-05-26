@@ -1,7 +1,9 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const OrderDelete = ({ deleted, refetch, setDeleted }) => {
+    const { handleLogout } = useUser();
     const handleOrderCancel = (orderId) => {
         fetch(`https://young-garden-78103.herokuapp.com/api/orders/${orderId}`, {
             method: "DELETE",
@@ -12,6 +14,7 @@ const OrderDelete = ({ deleted, refetch, setDeleted }) => {
         })
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
+                    handleLogout();
                     return toast.error('You are not authorized to perform this action');
                 } else {
                     return res.json();

@@ -7,7 +7,7 @@ import useUser from '../../../Hooks/useFirebase.js/useUser';
 import UserOrderDelete from './UserOrderDelete';
 
 const Orders = () => {
-    const { user } = useUser();
+    const { user, handleLogout } = useUser();
     let { data: order, refetch } = useQuery(["order", user.email], () => {
         return fetch(`https://young-garden-78103.herokuapp.com/api/order/?email=${user.email}`, {
             method: "GET",
@@ -18,6 +18,7 @@ const Orders = () => {
         })
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
+                    handleLogout();
                     return toast.error('You are not authorized to perform this action');
                 } else {
                     return res.json();

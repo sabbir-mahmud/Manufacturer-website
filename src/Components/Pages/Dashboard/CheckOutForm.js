@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const CheckOutForm = ({ order }) => {
     const stripe = useStripe();
@@ -11,6 +12,7 @@ const CheckOutForm = ({ order }) => {
     const [processing, setProcessing] = useState(false);
     const [transactionId, setTransactionId] = useState('');
     const pay = order?.pay;
+    const { handleLogout } = useUser();
     useEffect(() => {
 
         if (pay) {
@@ -24,6 +26,7 @@ const CheckOutForm = ({ order }) => {
             })
                 .then(res => {
                     if (res.status === 401 || res.status === 403) {
+                        handleLogout();
                         return toast.error('You are not authorized to perform this action');
                     } else {
                         return res.json();

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 import DeleteProductModal from './DeleteProductModal';
 
 const ManageProduct = () => {
+    const { handleLogout } = useUser();
     const { data: products, refetch } = useQuery('manageProducts', () => fetch('https://young-garden-78103.herokuapp.com/api/products').then(res => res.json()));
     const [delProduct, setDelProduct] = useState({});
 
@@ -18,6 +20,7 @@ const ManageProduct = () => {
             }
         }).then(res => {
             if (res.status === 401 || res.status === 403) {
+                handleLogout();
                 return toast.error('You are not authorized to perform this action');
             } else {
                 return res.json();

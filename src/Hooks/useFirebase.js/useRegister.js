@@ -1,13 +1,15 @@
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import useUser from "./useUser";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import generateToken from "./useJwt";
 import auth from "../../firebase.init";
+import generateToken from "./useJwt";
 
 const useRegister = () => {
     const { setUser, setLoading } = useUser();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     // update user profile
     const updateUserProfile = (fullName) => {
@@ -48,16 +50,15 @@ const useRegister = () => {
         console.log(fullName, email, password);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                const url = `https://sabbir-assignment-11.herokuapp.com/api/login`;
                 const email = userCredential.user.email;
                 // Signed Up
                 const user = userCredential.user;
                 updateUserProfile(fullName)
                 setUser(user);
                 // uncomment this line if you want to use jwt
-                // generateToken({ url, email }); 
+                generateToken(email);
                 verifyEmail();
-                // navigate('/login')
+                navigate(from)
                 console.log(user);
             }
             )

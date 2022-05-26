@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const MyReviews = () => {
-    const { user } = useUser();
+    const { user, handleLogout } = useUser();
     const { data: userData } = useQuery(user?.email, () => fetch(`https://young-garden-78103.herokuapp.com/api/users/profile/${user?.email}`, {
         method: 'GET',
         headers: {
@@ -41,6 +41,7 @@ const MyReviews = () => {
         })
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
+                    handleLogout();
                     return toast.error('You are not authorized to perform this action');
                 } else {
                     return res.json();

@@ -3,11 +3,13 @@ import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const EditProduct = () => {
     const { id } = useParams();
     const { data: product } = useQuery(['editProduct', id], () => fetch(`https://young-garden-78103.herokuapp.com/api/products/${id}`).then(res => res.json()));
     const imageStorageKey = 'd6cf365aabe2ff86e40fafe5d6f330c1'
+    const { handleLogout } = useUser();
 
     const handleProductUpdate = async (e) => {
         e.preventDefault();
@@ -52,7 +54,15 @@ const EditProduct = () => {
             },
             body: JSON.stringify(data),
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    handleLogout();
+                    return toast.error('You are not authorized to perform this action');
+                } else {
+                    return res.json();
+
+                }
+            })
             .then(result => {
                 if (result.acknowledged) {
                     toast.info('Product Updated Successfully');

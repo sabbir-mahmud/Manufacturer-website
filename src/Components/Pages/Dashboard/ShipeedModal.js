@@ -1,6 +1,9 @@
 import React from 'react';
+import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 
 const ShippedModal = ({ shipped, refetch, setShipped }) => {
+    const { handleLogout } = useUser();
     const handleShipped = (id) => {
         const status = { status: "shipped" };
         fetch(`https://young-garden-78103.herokuapp.com/api/orders/shipped/${id}`, {
@@ -11,7 +14,15 @@ const ShippedModal = ({ shipped, refetch, setShipped }) => {
             },
             body: JSON.stringify(status)
         })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 401 || res.status === 403) {
+                    handleLogout();
+                    return toast.error('You are not authorized to perform this action');
+                } else {
+                    return res.json();
+
+                }
+            })
             .then(data => console.log(data))
         setShipped({});
         refetch();

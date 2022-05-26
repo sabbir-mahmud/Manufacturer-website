@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 import OrderDelete from './OrderDelete';
 import ShippedModal from './ShipeedModal';
 
 const ManageOrder = () => {
+    const { handleLogout } = useUser();
     const { data: orders, refetch } = useQuery("orders", () => fetch("https://young-garden-78103.herokuapp.com/api/orders", {
         method: "GET",
         headers: {
@@ -14,6 +16,7 @@ const ManageOrder = () => {
         }
     }).then(res => {
         if (res.status === 401 || res.status === 403) {
+            handleLogout();
             return toast.error('You are not authorized to perform this action');
         } else {
             return res.json();

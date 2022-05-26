@@ -6,7 +6,7 @@ import useUser from '../../../Hooks/useFirebase.js/useUser';
 import Loading from '../../Shared/Loading/Loading';
 
 const Profile = () => {
-    const { user, loading } = useUser();
+    const { user, loading, handleLogout } = useUser();
     const { data: userDetails, loading: dataLoading } = useQuery(user.email, () => fetch(`https://young-garden-78103.herokuapp.com/api/users/profile/${user.email}`, {
         method: 'GET',
         headers: {
@@ -15,6 +15,7 @@ const Profile = () => {
         }
     }).then(res => {
         if (res.status === 401 || res.status === 403) {
+            handleLogout();
             return toast.error('You are not authorized to perform this action');
         } else {
             return res.json();

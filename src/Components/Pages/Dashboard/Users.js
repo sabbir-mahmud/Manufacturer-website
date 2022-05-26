@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
+import useUser from '../../../Hooks/useFirebase.js/useUser';
 import Loading from '../../Shared/Loading/Loading';
 import UserDelModal from './UserDelModal';
 
 const Users = () => {
+    const { handleLogout } = useUser();
     const [userDel, setUserDel] = useState({});
     const { data: users, loading, refetch } = useQuery('users', () => fetch('https://young-garden-78103.herokuapp.com/api/users', {
         method: 'GET',
@@ -13,7 +15,15 @@ const Users = () => {
             'Content-Type': 'application/json',
             "authorization": `Bearer ${localStorage.getItem("accessToken")}`
         },
-    }).then(res => res.json()));
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            handleLogout();
+            return toast.error('You are not authorized to perform this action');
+        } else {
+            return res.json();
+
+        }
+    }));
 
     if (loading) {
         return <Loading />
@@ -29,7 +39,15 @@ const Users = () => {
                 },
                 body: JSON.stringify({ email })
             })
-                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 401 || res.status === 403) {
+                        handleLogout();
+                        return toast.error('You are not authorized to perform this action');
+                    } else {
+                        return res.json();
+
+                    }
+                })
                 .then(data => console.log(data))
             toast.info('User is now an admin');
         } else {
