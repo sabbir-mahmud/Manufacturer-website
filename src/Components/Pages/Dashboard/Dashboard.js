@@ -21,7 +21,7 @@ const Dashboard = () => {
             <div className="drawer-content">
                 <div className="my-3">
                     <h2 className='font-bold text-3xl pt-3 '>Welcome to dashboard</h2>
-                    <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary lg:hidden">Open drawer</label>
+                    <label htmlFor="my-drawer-4" className="my-3 ml-3 drawer-button btn btn-primary lg:hidden">dashboard menu</label>
                 </div>
                 <Outlet></Outlet>
 
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
             </div>
             <div className="drawer-side mt-5">
-                <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+                <label htmlFor="my-drawer-4" className="drawer-overlay ml-3 "></label>
                 <ul className="menu p-4 overflow-y-auto w-48 bg-base-100 text-base-content">
                     <li><Link to="/dashboard/profile">my Profile</Link></li>
                     <li><Link to="/dashboard/settings">edit Profile</Link></li>
