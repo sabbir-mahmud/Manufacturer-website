@@ -27,7 +27,6 @@ const Payment = () => {
       }
     })
   );
-  console.log(order);
   const stripePromise = loadStripe(
     "pk_test_51L0hxlEZlpATTp01pmVfH39AEz88vRS3gtaq24IKt7ycF15zlpMhZYIslPdUBDv76JJI2LOqh2gs9c5vARhhNRSu00W1WaO6Vd"
   );

@@ -13,6 +13,7 @@ const CheckOutForm = ({ order }) => {
   const [transactionId, setTransactionId] = useState("");
   const pay = order?.amount;
   const { handleLogout } = useUser();
+
   useEffect(() => {
     if (pay) {
       fetch("http://localhost:5000/api/order/payment", {
@@ -91,7 +92,7 @@ const CheckOutForm = ({ order }) => {
         product: order.product,
         transactionId: paymentIntent.id,
       };
-      fetch(`https://young-garden-78103.herokuapp.com/api/order/${order._id}`, {
+      fetch(`http://localhost:5000/api/order/${order._id}`, {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -101,6 +102,7 @@ const CheckOutForm = ({ order }) => {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setProcessing(false);
           console.log(data);
         });

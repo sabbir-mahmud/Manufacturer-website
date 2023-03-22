@@ -1,34 +1,27 @@
 import { useEffect, useState } from "react";
 
-const useAdmin = user => {
-    const [admin, setAdmin] = useState(false);
-    const [adminLoading, setAdminLoading] = useState(true);
+const useAdmin = (user) => {
+  const [admin, setAdmin] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(true);
 
-    useEffect(() => {
-        const email = user?.email;
-        if (email) {
-            fetch(`https://young-garden-78103.herokuapp.com/api/admin?email=${email}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "authorization": `Bearer ${localStorage.getItem("accessToken")}`
-                }
+  useEffect(() => {
+    const email = user?.email;
+    if (email) {
+      fetch(`http://localhost:5000/api/users/admin?email=${email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAdmin(data.message);
+        });
+      setAdminLoading(false);
+    }
+  }, [user]);
 
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.role === "admin") {
-                        setAdmin(true);
-                    }
-                    else {
-                        setAdmin(false);
-                    }
-                })
-            setAdminLoading(false);
-        }
-    }, [user])
-
-    return { admin, adminLoading };
-
-}
+  return { admin, adminLoading };
+};
 export default useAdmin;
