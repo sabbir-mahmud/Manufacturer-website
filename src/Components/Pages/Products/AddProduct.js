@@ -17,7 +17,7 @@ const AddProduct = () => {
     formData.append("weight", data.weight);
     formData.append("quantity", data.Quantity);
     formData.append("min_order", data.minOrder);
-    formData.append("max_order", data.data);
+    formData.append("max_order", data.maxOrder);
     formData.append("description", data.description);
     formData.append("type", data.type);
     const url = `http://localhost:5000/api/products/`;
@@ -104,6 +104,16 @@ const AddProduct = () => {
                 {...register("minOrder")}
                 name="minOrder"
                 placeholder="min order: 53"
+                className="input input-bordered"
+              />
+            </div>
+            <div className="form-control">
+              <input
+                type="number"
+                step="0.1"
+                {...register("maxOrder")}
+                name="maxOrder"
+                placeholder="max order: 53"
                 className="input input-bordered"
               />
             </div>
