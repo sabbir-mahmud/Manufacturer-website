@@ -22,13 +22,12 @@ const EditProfile = () => {
     formData.append("address", data.location);
     formData.append("bio", data.bio);
     formData.append("education", data.education);
-    formData.append("linkedIn", data.linkedIn);
+    formData.append("linkedin", data.linkedIn);
     formData.append("github", data.github);
 
     fetch("http://localhost:5000/api/users/profile", {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: formData,
