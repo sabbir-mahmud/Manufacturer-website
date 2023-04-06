@@ -67,7 +67,7 @@ const ManageOrder = () => {
                 <td>
                   {order?.isPaid ? (
                     <>
-                      {order?.status ? (
+                      {order?.isDelivered ? (
                         <p className="text-green-500">Delivered</p>
                       ) : (
                         <label

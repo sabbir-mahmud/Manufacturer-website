@@ -36,13 +36,12 @@ const Users = () => {
 
   const makeAdmin = (email) => {
     if (email) {
-      fetch(`http://localhost:5000/api/users/make-admin`, {
-        method: "PUT",
+      fetch(`http://localhost:5000/api/users/make-admin/${email}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-        body: JSON.stringify({ email }),
       })
         .then((res) => {
           if (res.status === 401 || res.status === 403) {

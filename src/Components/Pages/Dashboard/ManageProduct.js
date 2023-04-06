@@ -13,7 +13,7 @@ const ManageProduct = () => {
   const [delProduct, setDelProduct] = useState({});
 
   const handleDelete = (id) => {
-    const url = `https://young-garden-78103.herokuapp.com/api/products/${id}`;
+    const url = `http://localhost:5000/api/products/${id}`;
     fetch(url, {
       method: "DELETE",
       headers: {

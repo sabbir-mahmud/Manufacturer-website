@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 
 const AddProduct = () => {
   const { register, handleSubmit, reset } = useForm();
-  const imageStorageKey = "d6cf365aabe2ff86e40fafe5d6f330c1";
 
   const onSubmit = async (data) => {
     const image = data.img[0];
@@ -19,7 +18,6 @@ const AddProduct = () => {
     formData.append("min_order", data.minOrder);
     formData.append("max_order", data.maxOrder);
     formData.append("description", data.description);
-    formData.append("type", data.type);
     const url = `http://localhost:5000/api/products/`;
     fetch(url, {
       method: "POST",
@@ -29,6 +27,7 @@ const AddProduct = () => {
       .then((result) => {
         console.log(result);
       });
+    reset();
   };
 
   return (
