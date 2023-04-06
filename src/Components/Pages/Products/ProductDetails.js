@@ -31,7 +31,7 @@ const ProductDetails = () => {
     const order = {
       user: user.email,
       productID: product._id,
-      amount: product.price,
+      amount: product.price * e.target.quantity.value,
       quantity: e.target.quantity.value,
       address: e.target.address.value,
       phone: e.target.phone.value,
@@ -40,14 +40,14 @@ const ProductDetails = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(order),
     })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        if (result.insertedId) {
+        if (result.productID) {
           toast.success("Order placed successfully");
           e.target.reset();
           refetch();

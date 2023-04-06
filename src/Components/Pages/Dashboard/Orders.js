@@ -44,7 +44,7 @@ const Orders = () => {
       <table className="table w-full">
         <thead>
           <tr>
-            <th>Product Name</th>
+            <th>Order ID</th>
             <th>Phone</th>
             <th>Price</th>
             <th>Location</th>
@@ -57,14 +57,14 @@ const Orders = () => {
             order?.map((order) => {
               return (
                 <tr key={order?._id} className="hover">
-                  <td>{order?.productName}</td>
+                  <td>{order?._id}</td>
                   <td>{order?.phone}</td>
-                  <td>${order?.price}</td>
-                  <td>${order?.address}</td>
+                  <td>${order?.amount}</td>
+                  <td>{order?.address}</td>
                   <td>{order?.status ? order?.status : "pending"}</td>
                   <td>
-                    {order?.paid ? (
-                      <p className="text-green-500">{order?.transactionId}</p>
+                    {order?.isPaid ? (
+                      <p className="text-green-500">{order?.paymentID}</p>
                     ) : (
                       <>
                         <label

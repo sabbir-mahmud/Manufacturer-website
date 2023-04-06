@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useUser from "../../../Hooks/useFirebase.js/useUser";
 
@@ -13,6 +14,7 @@ const CheckOutForm = ({ order }) => {
   const [transactionId, setTransactionId] = useState("");
   const pay = order?.amount;
   const { handleLogout } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (pay) {
@@ -105,6 +107,7 @@ const CheckOutForm = ({ order }) => {
           console.log(data);
           setProcessing(false);
           console.log(data);
+          navigate("/dashboard");
         });
     }
   };
