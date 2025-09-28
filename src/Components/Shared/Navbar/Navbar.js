@@ -9,18 +9,15 @@ const Navbar = () => {
     const { data: userDetails } = useQuery(
         ["userDetails", user?.uid],
         () =>
-            fetch(
-                `${process.env.REACT_APP_API_URL}api/users/profile/${user?.email}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        authorization: `Bearer ${localStorage.getItem(
-                            "accessToken"
-                        )}`,
-                    },
-                }
-            ).then((res) => res.json()),
+            fetch(`${process.env.REACT_APP_API_URL}api/users/${user?.email}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            }).then((res) => res.json()),
         {
             enabled: !!user?.uid,
         }

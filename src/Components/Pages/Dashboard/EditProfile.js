@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Helmet from "react-helmet";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -7,9 +8,8 @@ import Loading from "../../Shared/Loading/Loading";
 const EditProfile = () => {
     const { user, loading, handleLogout } = useUser();
     const { register, handleSubmit, reset } = useForm();
-    if (loading) {
-        return <Loading />;
-    }
+
+    if (loading) return <Loading />;
 
     const handleEditProfile = async (data) => {
         const image = data.avatar[0];
@@ -41,179 +41,120 @@ const EditProfile = () => {
                     return res.json();
                 }
             })
-            .then((result) => {
-                toast.info("Profile Updated");
+            .then(() => {
+                toast.success("Profile Updated Successfully!");
                 reset();
             });
     };
 
+    const containerVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    };
+
     return (
-        <div>
+        <motion.div
+            className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-24"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+        >
             <Helmet>
                 <title>Edit Profile</title>
             </Helmet>
-            <div className=" my-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
-                <h3 className="text-center text-3xl font-bold pt-5">
-                    Update your profile
-                </h3>
-                <form
-                    className="flex w-4/5 mx-auto"
+
+            <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden p-6 border border-gray-200">
+                <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+                    Update Your Profile
+                </h2>
+
+                <motion.form
+                    className="flex flex-col gap-4"
                     onSubmit={handleSubmit(handleEditProfile)}
+                    variants={containerVariants}
                 >
-                    <div className="card-body">
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                placeholder={user.displayName}
-                                className="input input-bordered"
-                                disabled
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <input
-                                type="text"
-                                placeholder={user.email}
-                                className="input input-bordered"
-                                disabled
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Phone Number</span>
-                            </label>
-                            <input
-                                type="number"
-                                {...register("number", {
-                                    required: {
-                                        value: true,
-                                        message: "number is Required",
-                                    },
-                                })}
-                                placeholder="+8801723451241"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">location</span>
-                            </label>
-                            <input
-                                type="text"
-                                {...register("location", {
-                                    required: {
-                                        value: true,
-                                        message: "location is Required",
-                                    },
-                                })}
-                                name="location"
-                                placeholder="Dhaka, Bangladesh"
-                                className="input input-bordered"
-                            />
-                        </div>
-
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Bio</span>
-                            </label>
-                            <textarea
-                                {...register("bio", {
-                                    required: {
-                                        value: true,
-                                        message: "bio is Required",
-                                    },
-                                })}
-                                className="input input-bordered"
-                                name="bio"
-                                id="bio"
-                                cols="30"
-                                rows="10"
-                            ></textarea>
-                        </div>
-
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Education</span>
-                            </label>
-                            <input
-                                type="text"
-                                {...register("education", {
-                                    required: {
-                                        value: true,
-                                        message: "education is Required",
-                                    },
-                                })}
-                                name="education"
-                                placeholder="MERN-STACK at Programming Hero"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">LinkedIn</span>
-                            </label>
-                            <input
-                                type="text"
-                                {...register("LinkedIn", {
-                                    required: {
-                                        value: true,
-                                        message: "LinkedIn is Required",
-                                    },
-                                })}
-                                name="LinkedIn"
-                                placeholder="https://www.linkedin.com/in/sabbirmahmudzim/"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Github</span>
-                            </label>
-                            <input
-                                type="text"
-                                {...register("github", {
-                                    required: {
-                                        value: true,
-                                        message: "github is Required",
-                                    },
-                                })}
-                                name="github"
-                                placeholder="https://github.com/sabbir-mahmud"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">
-                                    Upload Avatar
-                                </span>
-                            </label>
-                            <input
-                                type="file"
-                                {...register("avatar", {
-                                    required: {
-                                        value: true,
-                                        message: "avatar is Required",
-                                    },
-                                })}
-                                name="avatar"
-                                className="input input-bordered py-2"
-                            />
-                        </div>
-                        <div className="form-control mt-6">
-                            <button className="btn btn-primary">
-                                Update Profile
-                            </button>
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input
+                            type="text"
+                            placeholder={user.displayName}
+                            disabled
+                            className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+                        />
+                        <input
+                            type="email"
+                            placeholder={user.email}
+                            disabled
+                            className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+                        />
                     </div>
-                </form>
+
+                    <input
+                        type="number"
+                        {...register("number", { required: true })}
+                        placeholder="Phone Number"
+                        className="input input-bordered w-full"
+                    />
+
+                    <input
+                        type="text"
+                        {...register("location", { required: true })}
+                        placeholder="Location"
+                        className="input input-bordered w-full"
+                    />
+
+                    <textarea
+                        {...register("bio", { required: true })}
+                        placeholder="Write a short bio..."
+                        className="textarea textarea-bordered w-full h-24 resize-none"
+                    />
+
+                    <input
+                        type="text"
+                        {...register("education", { required: true })}
+                        placeholder="Education"
+                        className="input input-bordered w-full"
+                    />
+
+                    <input
+                        type="url"
+                        {...register("linkedIn", { required: true })}
+                        placeholder="LinkedIn URL"
+                        className="input input-bordered w-full"
+                    />
+
+                    <input
+                        type="url"
+                        {...register("github", { required: true })}
+                        placeholder="Github URL"
+                        className="input input-bordered w-full"
+                    />
+
+                    {/* Modern File Input */}
+                    <label className="w-full">
+                        <span className="block mb-1 text-gray-700 font-medium">
+                            Upload Avatar
+                        </span>
+                        <input
+                            type="file"
+                            {...register("avatar", { required: true })}
+                            className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0 file:text-sm file:font-semibold
+              file:bg-primary file:text-white hover:file:bg-primary-focus
+              cursor-pointer transition-all"
+                        />
+                    </label>
+
+                    <motion.button
+                        type="submit"
+                        className="btn btn-primary w-full py-3 text-lg font-semibold mt-2"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                    >
+                        Update Profile
+                    </motion.button>
+                </motion.form>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

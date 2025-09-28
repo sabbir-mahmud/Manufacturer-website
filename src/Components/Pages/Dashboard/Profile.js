@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Helmet from "react-helmet";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
@@ -19,8 +20,7 @@ const Profile = () => {
                 },
             }).then((res) => {
                 if (res.status === 401 || res.status === 403) {
-                    // handleLogout();
-                    return toast.error(
+                    toast.error(
                         "You are not authorized to perform this action"
                     );
                 } else {
@@ -29,97 +29,157 @@ const Profile = () => {
             })
     );
 
-    if (dataLoading || loading || userDetails?.length === 0 || !userDetails) {
+    if (dataLoading || loading || !userDetails || userDetails.length === 0) {
         return <Loading />;
     }
 
-    console.log(user);
-    const img = "https://api.lorem.space/image/face?hash=3174";
+    const details = userDetails[0];
+    const placeholderImg = "https://api.lorem.space/image/face?hash=3174";
+
+    const containerVariants = {
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.2 } },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 120, damping: 25 },
+        },
+    };
 
     return (
-        <div className="my-24 container mx-auto px-14">
+        <motion.div
+            className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+        >
             <Helmet>
-                <title>{user?.displayName}</title>
+                <title>{user?.displayName || "Profile"}</title>
             </Helmet>
-            <div className="profile flex flex-col lg:flex-row items-center">
-                <div className="avatar mr-14">
-                    <div className="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+
+            {/* Profile Header */}
+            <motion.div
+                className="flex flex-col lg:flex-row items-center gap-8 mb-12"
+                variants={itemVariants}
+            >
+                <div className="avatar">
+                    <div className="w-48 h-48 rounded-full overflow-hidden ring ring-primary ring-offset-base-100 ring-offset-2 shadow-lg">
                         <img
-                            src={
-                                userDetails[0]?.avatar
-                                    ? userDetails[0].avatar
-                                    : img
-                            }
-                            alt=""
+                            src={details?.avatar || placeholderImg}
+                            alt={user?.displayName}
+                            className="object-cover w-full h-full"
                         />
                     </div>
                 </div>
-                <div className="user-details my-9 lg:my-0">
-                    <h3 className="text-2xl font-bold">{user?.displayName}</h3>
-                    <p>
-                        Bio:{" "}
-                        {userDetails[0]?.bio
-                            ? userDetails[0]?.bio
-                            : "Web Developer"}
+                <div className="flex-1 text-center lg:text-left">
+                    <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                        {user?.displayName}
+                    </h1>
+                    <p className="mt-2 text-gray-600">
+                        {details?.bio || "Web Developer"}
                     </p>
                 </div>
-            </div>
-            <div className="mb-5 mt-14">
-                <h3 className="mt-5 font-bold text-3xl mb-3 text-primary">
-                    Personal details:
-                </h3>
-                <p className="mb-2 font-serif text-md text-primary ml-3">
-                    email: {user[0]?.email ? user[0]?.email : "info@gmail.com"}
-                </p>
-                <p className="mb-2 font-serif text-md text-primary ml-3">
-                    phone:{" "}
-                    {userDetails[0]?.phone
-                        ? userDetails[0]?.phone
-                        : "+8801756644241"}
-                </p>
-                <p className="mb-2 font-serif text-md text-primary ml-3">
-                    address:{" "}
-                    {userDetails[0]?.address
-                        ? userDetails[0]?.address
-                        : "Dhaka, Bangladesh"}
-                </p>
-            </div>
-            <div className="my-4">
-                <h3 className="mt-5 font-bold text-3xl mb-3 text-primary">
-                    Education details:
-                </h3>
-                <p className="mb-2 font-serif text-md text-primary ml-3">
-                    {userDetails[0]?.education
-                        ? userDetails[0]?.education
-                        : "CSE at BUET"}
-                </p>
-            </div>
-            <div className="my-4">
-                <h3 className="mt-5 font-bold text-3xl mb-3 text-primary">
-                    Connect with:
-                </h3>
-                {userDetails[0]?.github ? (
-                    <a
-                        className="text-md ml-3 hover:underline hover:text-blue-500 hover:pointer"
-                        href={userDetails[0]?.github}
-                    >
-                        Github
-                    </a>
-                ) : (
-                    <p className="ml-3 inline-block">github not found</p>
-                )}
-                {userDetails[0]?.linkedin ? (
-                    <a
-                        className="text-md hover:underline hover:text-blue-500 hover:pointer mx-3"
-                        href={userDetails[0]?.linkedin}
-                    >
-                        linkedIn
-                    </a>
-                ) : (
-                    <p className=" mx-3 inline-block">linkedIn not found</p>
-                )}
-            </div>
-        </div>
+            </motion.div>
+
+            {/* Info Cards */}
+            <motion.div
+                className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                variants={containerVariants}
+            >
+                {/* Personal Details */}
+                <motion.div
+                    className="bg-white rounded-2xl shadow-lg p-6"
+                    variants={itemVariants}
+                >
+                    <h3 className="text-xl font-bold text-primary mb-4">
+                        Personal Details
+                    </h3>
+                    <p className="text-gray-700 mb-2">
+                        <strong>Email:</strong>{" "}
+                        {user?.email || "info@gmail.com"}
+                    </p>
+                    <p className="text-gray-700 mb-2">
+                        <strong>Phone:</strong>{" "}
+                        {details?.phone || "+8801756644241"}
+                    </p>
+                    <p className="text-gray-700 mb-2">
+                        <strong>Address:</strong>{" "}
+                        {details?.address || "Dhaka, Bangladesh"}
+                    </p>
+                </motion.div>
+
+                {/* Education Details */}
+                <motion.div
+                    className="bg-white rounded-2xl shadow-lg p-6"
+                    variants={itemVariants}
+                >
+                    <h3 className="text-xl font-bold text-primary mb-4">
+                        Education
+                    </h3>
+                    <p className="text-gray-700">
+                        {details?.education || "CSE at BUET"}
+                    </p>
+                </motion.div>
+
+                {/* Social Links */}
+                <motion.div
+                    className="bg-white rounded-2xl shadow-lg p-6"
+                    variants={itemVariants}
+                >
+                    <h3 className="text-xl font-bold text-primary mb-4">
+                        Connect With
+                    </h3>
+                    <div className="flex flex-wrap gap-4">
+                        {details?.github ? (
+                            <a
+                                href={details.github}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-blue-600 hover:underline"
+                            >
+                                GitHub
+                            </a>
+                        ) : (
+                            <span className="text-gray-400">
+                                GitHub not found
+                            </span>
+                        )}
+                        {details?.linkedin ? (
+                            <a
+                                href={details.linkedin}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-blue-600 hover:underline"
+                            >
+                                LinkedIn
+                            </a>
+                        ) : (
+                            <span className="text-gray-400">
+                                LinkedIn not found
+                            </span>
+                        )}
+                    </div>
+                </motion.div>
+            </motion.div>
+
+            {/* Logout Button */}
+            <motion.div
+                className="mt-10 flex justify-center"
+                variants={itemVariants}
+            >
+                <button
+                    onClick={handleLogout}
+                    className="btn btn-outline btn-primary px-8 py-2 hover:bg-primary hover:text-white transition"
+                >
+                    Logout
+                </button>
+            </motion.div>
+        </motion.div>
     );
 };
 

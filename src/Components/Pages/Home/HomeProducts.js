@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../Shared/Loading/Loading";
 import HomeProduct from "./HomeProduct";
 
 const HomeProducts = () => {
+    const navigate = useNavigate();
     const { data: products, isLoading } = useQuery("products", () => {
         return fetch(`${process.env.REACT_APP_API_URL}api/products/`).then(
             (response) => response.json()
@@ -50,16 +52,30 @@ const HomeProducts = () => {
                 {isLoading ? (
                     <Loading />
                 ) : (
-                    products?.map((product) => (
-                        <HomeProduct
-                            key={product._id}
-                            product={product}
-                            as={motion.div}
-                            variants={itemVariants}
-                        />
-                    ))
+                    products
+                        ?.slice(0, 6)
+                        ?.map((product) => (
+                            <HomeProduct
+                                key={product._id}
+                                product={product}
+                                as={motion.div}
+                                variants={itemVariants}
+                            />
+                        ))
                 )}
             </motion.div>
+
+            {/* Show More Button */}
+            {!isLoading && products?.length > 6 && (
+                <div className="flex justify-center mt-8">
+                    <button
+                        onClick={() => navigate("/products")}
+                        className="px-6 py-3 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-primary/90 transition"
+                    >
+                        Show More
+                    </button>
+                </div>
+            )}
         </motion.div>
     );
 };
