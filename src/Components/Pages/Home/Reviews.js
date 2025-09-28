@@ -9,7 +9,7 @@ const Reviews = () => {
     });
     return (
         <div className="mb-5 mt-24">
-            <div className="title">
+            <div className="title mb-24">
                 <h3 className="text-4xl text-primary font-bold text-center">
                     Clients Reviews
                 </h3>
