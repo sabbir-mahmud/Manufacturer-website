@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
 import Helmet from "react-helmet";
 import { useQuery } from "react-query";
@@ -9,21 +10,17 @@ const ProductDetails = () => {
     const [btnDisable, setBtnDisable] = useState(false);
     const { user } = useUser();
     const { id } = useParams();
-    const { data: product, refetch } = useQuery(["product", id], () => {
-        return fetch(`${process.env.REACT_APP_API_URL}api/products/${id}`).then(
+    const { data: product, refetch } = useQuery(["product", id], () =>
+        fetch(`${process.env.REACT_APP_API_URL}api/products/${id}`).then(
             (res) => res.json()
-        );
-    });
+        )
+    );
 
     const handleBtn = (e) => {
-        let qtn = parseInt(e.target.value);
-        let productQtn = parseInt(product.quantity);
-        let minOrder = parseInt(product.minOrder);
-        if (qtn > productQtn || qtn <= minOrder - 1) {
-            setBtnDisable(true);
-        } else {
-            setBtnDisable(false);
-        }
+        const qtn = parseInt(e.target.value);
+        const maxOrder = product?.max_order || Number.MAX_SAFE_INTEGER;
+        const minOrder = product?.min_order || 1;
+        setBtnDisable(qtn > maxOrder || qtn < minOrder);
     };
 
     const handleOrderSubmit = (e) => {
@@ -46,7 +43,6 @@ const ProductDetails = () => {
         })
             .then((res) => res.json())
             .then((result) => {
-                console.log(result);
                 if (result.productID) {
                     toast.success("Order placed successfully");
                     e.target.reset();
@@ -57,116 +53,158 @@ const ProductDetails = () => {
             });
     };
 
-    return (
-        <div>
-            <Helmet>
-                <title>{product?.name}</title>
-            </Helmet>
-            <div className="hero min-h-screen bg-base-100">
-                <div className="hero-content flex-col lg:flex-row">
-                    <img
-                        src={product?.img}
-                        className="max-w-sm rounded-lg mr-14"
-                        alt=""
-                    />
-                    <div>
-                        <h1 className="text-4xl font-bold">
-                            Brand: {product?.brand}
-                        </h1>
-                        <h1 className="text-2xl font-bold">
-                            Name: {product?.name}
-                        </h1>
-                        <p className="py-1">Model: {product?.model}</p>
-                        <p className="py-1">Quantity: {product?.quantity}</p>
-                        <p className="py-1">
-                            Min order quantity: {product?.minOrder}
-                        </p>
-                        <p className="py-1">Price: {product?.price}</p>
-                    </div>
-                </div>
-            </div>
+    const containerVariants = {
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.15 } },
+    };
 
-            <div className=" mb-14 w-4/5 mx-auto rounded-xl shadow-2xl bg-base-100">
-                <div className="pt-12 mb-14">
-                    <h3 className="text-center font-bold text-3xl ">
-                        Order this product
-                    </h3>
-                </div>
-                <form
-                    className="flex w-3/5 mx-auto"
-                    onSubmit={handleOrderSubmit}
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 120, damping: 25 },
+        },
+    };
+
+    if (!product) return null;
+
+    return (
+        <motion.div
+            className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+        >
+            <Helmet>
+                <title>{product.name}</title>
+            </Helmet>
+
+            {/* Image + Key Info */}
+            <motion.div
+                className="flex flex-col lg:flex-row gap-8 mb-12"
+                variants={containerVariants}
+            >
+                {/* Small Image */}
+                <motion.div
+                    className="lg:w-1/4 w-full rounded-xl overflow-hidden bg-white p-4 flex justify-center items-center border border-gray-200"
+                    whileHover={{ scale: 1.03 }}
+                    variants={itemVariants}
                 >
-                    <div className="card-body">
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
-                            <input
-                                type="text"
-                                placeholder={user?.email}
-                                className="input input-bordered"
-                                disabled
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                placeholder={user.displayName}
-                                className="input input-bordered"
-                                disabled
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">
-                                    Order Quantity
-                                </span>
-                            </label>
-                            <input
-                                onChange={handleBtn}
-                                type="number"
-                                name="quantity"
-                                placeholder="100"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Phone Number</span>
-                            </label>
-                            <input
-                                type="number"
-                                name="phone"
-                                placeholder="+8801782888241"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Address</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="address"
-                                placeholder="Dhaka, Bangladesh"
-                                className="input input-bordered"
-                            />
-                        </div>
-                        <div className="form-control mt-6">
-                            <button
-                                disabled={btnDisable}
-                                className="btn btn-primary"
-                            >
-                                Order
-                            </button>
-                        </div>
+                    <motion.img
+                        src={product.img}
+                        alt={product.name}
+                        className="object-contain w-40 h-40 rounded-lg"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 120 }}
+                    />
+                </motion.div>
+
+                {/* Key Details */}
+                <motion.div
+                    className="lg:w-3/4 flex flex-col gap-3"
+                    variants={itemVariants}
+                >
+                    <h1 className="text-gray-500 font-medium text-lg">
+                        {product.brand}
+                    </h1>
+                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
+                        {product.name}
+                    </h2>
+                    <p className="text-blue-600 font-extrabold text-xl">
+                        ${product.price}
+                    </p>
+                    <div className="grid grid-cols-2 gap-4 text-gray-700 mt-2">
+                        <p>
+                            <strong>Model:</strong> {product.model}
+                        </p>
+                        <p>
+                            <strong>Stock:</strong>{" "}
+                            {product.quantity.toLocaleString()}
+                        </p>
+                        <p>
+                            <strong>Weight:</strong> {product.weight} kg
+                        </p>
+                        <p className="text-sm text-gray-500">
+                            <strong>Min Order:</strong> {product.min_order},{" "}
+                            <strong>Max Order:</strong> {product.max_order}
+                        </p>
                     </div>
-                </form>
-            </div>
-        </div>
+                </motion.div>
+            </motion.div>
+
+            {/* Full Product Description */}
+            <motion.div
+                className="bg-white rounded-3xl p-6 shadow-lg mb-12"
+                variants={itemVariants}
+            >
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                    Product Description
+                </h3>
+                <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                    {product.description}
+                </p>
+            </motion.div>
+
+            {/* Order Form */}
+            <motion.form
+                onSubmit={handleOrderSubmit}
+                className="bg-white rounded-3xl p-8 shadow-xl flex flex-col gap-5"
+                variants={itemVariants}
+            >
+                <h3 className="text-2xl font-bold text-center text-primary mb-4">
+                    Place Your Order
+                </h3>
+
+                <motion.input
+                    type="text"
+                    placeholder={user?.email}
+                    className="input input-bordered"
+                    disabled
+                    variants={itemVariants}
+                />
+                <motion.input
+                    type="text"
+                    placeholder={user?.displayName}
+                    className="input input-bordered"
+                    disabled
+                    variants={itemVariants}
+                />
+                <motion.input
+                    type="number"
+                    name="quantity"
+                    placeholder={`Quantity (min ${product.min_order}, max ${product.max_order})`}
+                    className="input input-bordered"
+                    onChange={handleBtn}
+                    variants={itemVariants}
+                />
+                <motion.input
+                    type="number"
+                    name="phone"
+                    placeholder="Phone Number"
+                    className="input input-bordered"
+                    variants={itemVariants}
+                />
+                <motion.input
+                    type="text"
+                    name="address"
+                    placeholder="Address"
+                    className="input input-bordered"
+                    variants={itemVariants}
+                />
+                <motion.button
+                    type="submit"
+                    disabled={btnDisable}
+                    className="btn btn-primary mt-2"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    variants={itemVariants}
+                >
+                    Order Now
+                </motion.button>
+            </motion.form>
+        </motion.div>
     );
 };
 
