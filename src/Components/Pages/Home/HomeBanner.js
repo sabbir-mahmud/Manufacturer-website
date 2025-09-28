@@ -33,7 +33,7 @@ const HomeBanner = () => {
 
     return (
         <motion.div
-            className="hero min-h-screen bg-base-100 px-4 sm:px-6 lg:px-16"
+            className="hero bg-base-100 mt-24 px-4 sm:px-6 lg:px-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
