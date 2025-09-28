@@ -20,6 +20,9 @@ const AddProduct = () => {
         const url = `${process.env.REACT_APP_API_URL}api/products/`;
         fetch(url, {
             method: "POST",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
             body: formData,
         })
             .then((res) => res.json())

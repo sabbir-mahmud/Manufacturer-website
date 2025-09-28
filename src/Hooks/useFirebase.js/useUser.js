@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
 const useUser = () => {
@@ -10,33 +10,39 @@ const useUser = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-
     // get user from firebase
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
+                console.log("user inside state change", user);
+
                 setUser(user);
             } else {
                 setUser({});
             }
-
 
             setLoading(false);
         });
         return () => unsubscribe;
     }, []);
 
-
-
     const handleLogout = () => {
-        localStorage.removeItem('accessToken')
+        localStorage.removeItem("accessToken");
         auth.signOut();
-        navigate('/login')
+        navigate("/login");
         setUser({});
         toast.info("You are logged out!");
-    }
+    };
 
-    return { user, loading, error, setUser, setLoading, setError, handleLogout };
-}
+    return {
+        user,
+        loading,
+        error,
+        setUser,
+        setLoading,
+        setError,
+        handleLogout,
+    };
+};
 
 export default useUser;

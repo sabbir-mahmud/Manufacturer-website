@@ -9,18 +9,17 @@ const Profile = () => {
     const { data: userDetails, loading: dataLoading } = useQuery(
         user.email,
         () =>
-            fetch(
-                `${process.env.REACT_APP_API_URL}api/users/sabbir.mahmud.zim@gmail.com`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        // authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                    },
-                }
-            ).then((res) => {
+            fetch(`${process.env.REACT_APP_API_URL}api/users/${user.email}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem(
+                        "accessToken"
+                    )}`,
+                },
+            }).then((res) => {
                 if (res.status === 401 || res.status === 403) {
-                    handleLogout();
+                    // handleLogout();
                     return toast.error(
                         "You are not authorized to perform this action"
                     );
@@ -34,7 +33,7 @@ const Profile = () => {
         return <Loading />;
     }
 
-    console.log();
+    console.log(user);
     const img = "https://api.lorem.space/image/face?hash=3174";
 
     return (

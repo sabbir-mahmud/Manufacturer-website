@@ -7,7 +7,7 @@ const MyReviews = () => {
     const { user, handleLogout } = useUser();
     const { data: userData } = useQuery(user?.email, () =>
         fetch(
-            `https://young-garden-78103.herokuapp.com/api/users/profile/${user?.email}`,
+            `${process.env.REACT_APP_API_URL}api/users/profile/${user?.email}`,
             {
                 method: "GET",
                 headers: {
