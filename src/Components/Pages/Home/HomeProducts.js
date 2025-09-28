@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import Loading from "../../Shared/Loading/Loading";
 import HomeProduct from "./HomeProduct";
@@ -8,14 +9,44 @@ const HomeProducts = () => {
             (response) => response.json()
         );
     });
+
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: 0.15,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 100, damping: 20 },
+        },
+    };
+
     return (
-        <div>
-            <div className="mb-24">
-                <h2 className="text-4xl text-primary font-bold text-center">
-                    Our Products
-                </h2>
-            </div>
-            <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <motion.div
+            className="mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+        >
+            <motion.h2
+                className="text-4xl text-primary font-bold text-center mb-12"
+                variants={itemVariants}
+            >
+                Our Products
+            </motion.h2>
+
+            <motion.div
+                className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                variants={containerVariants}
+            >
                 {isLoading ? (
                     <Loading />
                 ) : (
@@ -23,11 +54,13 @@ const HomeProducts = () => {
                         <HomeProduct
                             key={product._id}
                             product={product}
-                        ></HomeProduct>
+                            as={motion.div}
+                            variants={itemVariants}
+                        />
                     ))
                 )}
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

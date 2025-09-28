@@ -1,10 +1,34 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+    const containerVariants = {
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.15 } },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 100, damping: 20 },
+        },
+    };
+
     return (
-        <div className="bg-primary pt-5 pb-3">
-            <footer className="footer container mx-auto bg-primary text-base-100">
-                <div>
+        <motion.div
+            className="bg-primary pt-5 pb-3"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+        >
+            <motion.footer
+                className="footer container mx-auto bg-primary text-base-100"
+                variants={containerVariants}
+            >
+                <motion.div variants={itemVariants}>
                     <svg
                         width="50"
                         height="50"
@@ -21,8 +45,9 @@ const Footer = () => {
                         <br />
                         Providing reliable tech since 1992
                     </p>
-                </div>
-                <div>
+                </motion.div>
+
+                <motion.div variants={itemVariants}>
                     <span className="footer-title">Links</span>
                     <Link to="/" className="link link-hover">
                         Home
@@ -30,18 +55,19 @@ const Footer = () => {
                     <Link to="/products" className="link link-hover">
                         Products
                     </Link>
-                </div>
-                <div>
-                    <span className="footer-title">useful links</span>
+                </motion.div>
+
+                <motion.div variants={itemVariants}>
+                    <span className="footer-title">Useful Links</span>
                     <Link to="/dashboard/settings" className="link link-hover">
-                        settings
+                        Settings
                     </Link>
                     <Link to="/dashboard/profile" className="link link-hover">
                         Profile
                     </Link>
-                </div>
-            </footer>
-        </div>
+                </motion.div>
+            </motion.footer>
+        </motion.div>
     );
 };
 

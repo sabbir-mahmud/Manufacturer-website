@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const HomeProduct = ({ product }) => {
@@ -8,8 +9,29 @@ const HomeProduct = ({ product }) => {
         overflow: "hidden",
     };
 
+    // Variants for entrance animation
+    const cardVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 100, damping: 20 },
+        },
+    };
+
     return (
-        <div className="max-w-sm mx-auto bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 flex flex-col">
+        <motion.div
+            className="max-w-sm mx-auto bg-white rounded-xl border border-gray-200 shadow-md flex flex-col"
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            whileHover={{
+                scale: 1.03,
+                boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+            }}
+            whileTap={{ scale: 0.97 }}
+        >
             {/* Product Image */}
             <div className="w-full h-56 bg-white flex items-center justify-center overflow-hidden rounded-t-xl">
                 <img
@@ -66,7 +88,7 @@ const HomeProduct = ({ product }) => {
                     </Link>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

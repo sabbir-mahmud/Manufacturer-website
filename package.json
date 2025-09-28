@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "daisyui": "^2.15.0",
     "firebase": "^9.8.1",
+    "framer-motion": "^12.23.22",
     "lucide-react": "^0.544.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

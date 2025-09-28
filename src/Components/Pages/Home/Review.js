@@ -1,9 +1,19 @@
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
-const Review = ({ review }) => {
+
+const Review = ({ review, variants }) => {
     const stars = Array.from({ length: 5 }, (_, i) => i < review.starts);
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition duration-300 p-6 flex flex-col">
+        <motion.div
+            className="max-w-md mx-auto bg-white rounded-xl border border-gray-200 shadow-md flex flex-col p-6"
+            variants={variants}
+            whileHover={{
+                scale: 1.03,
+                boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+            }}
+            whileTap={{ scale: 0.97 }}
+        >
             <div className="flex items-center mb-4">
                 <div className="avatar">
                     <div className="w-16 h-16 rounded-full ring ring-primary ring-offset-2 overflow-hidden mr-4">
@@ -38,7 +48,7 @@ const Review = ({ review }) => {
             <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
                 {review.review}
             </p>
-        </div>
+        </motion.div>
     );
 };
 

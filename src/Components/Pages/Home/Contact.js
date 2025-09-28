@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 
 const Contact = () => {
@@ -22,12 +23,36 @@ const Contact = () => {
         e.target.reset();
     };
 
+    // Variants
+    const containerVariants = {
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.2 } },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 100, damping: 20 },
+        },
+    };
+
     return (
-        <section className="bg-gray-50 py-12 sm:py-16">
+        <motion.section
+            className="bg-gray-50 py-12 sm:py-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={containerVariants}
+        >
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
                     {/* Left side - text */}
-                    <div className="flex-1 text-center lg:text-left">
+                    <motion.div
+                        className="flex-1 text-center lg:text-left"
+                        variants={itemVariants}
+                    >
                         <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
                             Contact <span className="text-primary">Us</span>
                         </h1>
@@ -37,10 +62,13 @@ const Contact = () => {
                             consultation. Fill out the form, and our experts
                             will get back to you as soon as possible.
                         </p>
-                    </div>
+                    </motion.div>
 
                     {/* Right side - form */}
-                    <div className="flex-1 w-full max-w-md mx-auto lg:mx-0">
+                    <motion.div
+                        className="flex-1 w-full max-w-md mx-auto lg:mx-0"
+                        variants={itemVariants}
+                    >
                         <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 sm:p-8">
                             <form
                                 onSubmit={handleSubmit}
@@ -89,18 +117,20 @@ const Contact = () => {
                                 </div>
 
                                 {/* Submit */}
-                                <button
+                                <motion.button
                                     type="submit"
                                     className="btn btn-primary w-full rounded-lg py-3 text-white text-sm sm:text-base hover:shadow-md transition"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     Send Message
-                                </button>
+                                </motion.button>
                             </form>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 };
 
