@@ -3,6 +3,7 @@ import useUser from "../../../Hooks/useFirebase.js/useUser";
 
 const UserDelModal = ({ userDel, setUserDel, refetch }) => {
     const { handleLogout } = useUser();
+
     const handleUserDel = (id) => {
         fetch(`${process.env.REACT_APP_API_URL}api/users/user/${id}`, {
             method: "DELETE",
@@ -14,42 +15,44 @@ const UserDelModal = ({ userDel, setUserDel, refetch }) => {
             .then((res) => {
                 if (res.status === 401 || res.status === 403) {
                     handleLogout();
-                    return toast.error(
+                    toast.error(
                         "You are not authorized to perform this action"
                     );
-                } else {
-                    return res.json();
+                    return null;
+                }
+                return res.json();
+            })
+            .then((res) => {
+                if (res) {
+                    toast.success("User deleted successfully");
+                    refetch(); // ✅ only after success
+                    setUserDel({}); // ✅ close modal after success
                 }
             })
-            .then((res) => toast.info("user deleted"));
-        refetch();
-        setUserDel({});
+            .catch(() => toast.error("Failed to delete user"));
     };
+
     return (
         <div>
-            <div>
-                <input
-                    type="checkbox"
-                    id="user-delete"
-                    className="modal-toggle"
-                />
-                <div className="modal modal-bottom sm:modal-middle bg-transparent">
-                    <div className="modal-box relative">
-                        <label
-                            for="user-delete"
-                            className="btn btn-sm btn-circle absolute right-2 top-2"
-                        >
-                            ✕
-                        </label>
-                        <h3 className="text-lg font-bold">Are you sure!</h3>
-                        <p className="py-4">you want to delete this order</p>
-                        <button
-                            onClick={() => handleUserDel(userDel._id)}
-                            className="btn btn-primary"
-                        >
-                            yes
-                        </button>
-                    </div>
+            <input type="checkbox" id="user-delete" className="modal-toggle" />
+            <div className="modal modal-bottom sm:modal-middle bg-transparent">
+                <div className="modal-box relative">
+                    <label
+                        htmlFor="user-delete"
+                        className="btn btn-sm btn-circle absolute right-2 top-2"
+                    >
+                        ✕
+                    </label>
+                    <h3 className="text-lg font-bold">Are you sure?</h3>
+                    <p className="py-4">
+                        Do you really want to delete {userDel?.email}?
+                    </p>
+                    <button
+                        onClick={() => handleUserDel(userDel._id)}
+                        className="btn btn-primary"
+                    >
+                        Yes, delete
+                    </button>
                 </div>
             </div>
         </div>

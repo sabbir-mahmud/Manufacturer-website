@@ -14,8 +14,6 @@ const useUser = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("user inside state change", user);
-
                 setUser(user);
             } else {
                 setUser({});

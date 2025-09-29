@@ -4,27 +4,24 @@ import useUser from "../../../Hooks/useFirebase.js/useUser";
 const OrderDelete = ({ deleted, refetch, setDeleted }) => {
     const { handleLogout } = useUser();
     const handleOrderCancel = (orderId) => {
-        console.log(orderId);
         const url = `${process.env.REACT_APP_API_URL}api/orders/${orderId}`;
-        console.log(orderId);
         fetch(url, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-        })
-            .then((res) => {
-                if (res.status === 401 || res.status === 403) {
-                    handleLogout();
-                    return toast.error(
-                        "You are not authorized to perform this action"
-                    );
-                } else {
-                    return res.json();
-                }
-            })
-            .then((res) => console.log(res));
+        }).then((res) => {
+            if (res.status === 401 || res.status === 403) {
+                handleLogout();
+                return toast.error(
+                    "You are not authorized to perform this action"
+                );
+            } else {
+                return res.json();
+            }
+        });
+        toast.success("Order Cancelled");
         refetch();
         setDeleted({});
     };

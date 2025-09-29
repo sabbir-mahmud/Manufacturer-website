@@ -1,9 +1,13 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
-import useUser from "./useUser";
+import {
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    updateProfile,
+} from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 import generateToken from "./useJwt";
+import useUser from "./useUser";
 
 const useRegister = () => {
     const { setUser, setLoading } = useUser();
@@ -15,21 +19,18 @@ const useRegister = () => {
     const updateUserProfile = (fullName) => {
         const user = auth.currentUser;
         updateProfile(user, {
-            displayName: fullName
+            displayName: fullName,
         })
-            .then(() => {
-            })
-            .catch((error) => {
-            });
-    }
+            .then(() => {})
+            .catch((error) => {});
+    };
 
     // verify email
     const verifyEmail = () => {
-        sendEmailVerification(auth.currentUser)
-            .then(() => {
-                toast.info("Email sent");
-            });
-    }
+        sendEmailVerification(auth.currentUser).then(() => {
+            toast.info("Email sent");
+        });
+    };
 
     // handle sign up
     const handleSignUp = (e) => {
@@ -40,38 +41,33 @@ const useRegister = () => {
         const email = e.target.email.value;
         const userPassword = e.target.password.value;
         const confirmPassword = e.target.confirmPassword.value;
-        let password = '';
+        let password = "";
         if (userPassword === confirmPassword) {
             password = userPassword;
         } else {
             toast.error("Password and Confirm Password does not match");
             return;
         }
-        console.log(fullName, email, password);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const email = userCredential.user.email;
                 // Signed Up
                 const user = userCredential.user;
-                updateUserProfile(fullName)
+                updateUserProfile(fullName);
                 setUser(user);
                 // uncomment this line if you want to use jwt
                 generateToken(email);
                 verifyEmail();
-                navigate(from)
-                console.log(user);
-            }
-            )
+                navigate(from);
+            })
             .catch((error) => {
                 const errorMessage = error.message;
                 toast.error(errorMessage);
                 setLoading(false);
-            }
-            );
-    }
+            });
+    };
 
     return handleSignUp;
-
-}
+};
 
 export default useRegister;

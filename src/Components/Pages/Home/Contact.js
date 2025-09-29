@@ -14,10 +14,7 @@ const Contact = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body,
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.error(err));
+        }).then((res) => res.json());
 
         toast.info("Thanks, we will contact you soon!");
         e.target.reset();

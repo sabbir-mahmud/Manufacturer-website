@@ -10,18 +10,17 @@ const ShippedModal = ({ shipped, refetch, setShipped }) => {
                 "Content-Type": "application/json",
                 authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-        })
-            .then((res) => {
-                if (res.status === 401 || res.status === 403) {
-                    handleLogout();
-                    return toast.error(
-                        "You are not authorized to perform this action"
-                    );
-                } else {
-                    return res.json();
-                }
-            })
-            .then((data) => console.log(data));
+        }).then((res) => {
+            if (res.status === 401 || res.status === 403) {
+                handleLogout();
+                return toast.error(
+                    "You are not authorized to perform this action"
+                );
+            } else {
+                return res.json();
+            }
+        });
+        toast.success("Order Shipped");
         setShipped({});
         refetch();
     };

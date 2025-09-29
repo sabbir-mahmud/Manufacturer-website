@@ -25,9 +25,7 @@ const AddProduct = () => {
                 authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
             body: formData,
-        })
-            .then((res) => res.json())
-            .then((result) => console.log(result));
+        }).then((res) => res.json());
 
         reset();
     };

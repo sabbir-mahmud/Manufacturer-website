@@ -1,6 +1,6 @@
 import Helmet from "react-helmet";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useUser from "../../../Hooks/useFirebase.js/useUser";
 
@@ -13,6 +13,7 @@ const EditProduct = () => {
     );
 
     const { handleLogout } = useUser();
+    const navigate = useNavigate();
 
     const handleProductUpdate = async (e) => {
         e.preventDefault();
@@ -59,9 +60,10 @@ const EditProduct = () => {
                 return res.json();
             })
             .then((result) => {
-                if (result.acknowledged) {
+                if (result?._id) {
                     toast.info("Product Updated Successfully");
                     e.target.reset();
+                    navigate("/dashboard/manage-product");
                 }
             });
     };

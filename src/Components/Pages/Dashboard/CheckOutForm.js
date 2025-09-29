@@ -39,7 +39,6 @@ const CheckOutForm = ({ order }) => {
                     }
                 })
                 .then((data) => {
-                    console.log(data);
                     if (data?.clientSecret) {
                         setClientSecret(data.clientSecret);
                     }
@@ -90,7 +89,6 @@ const CheckOutForm = ({ order }) => {
         } else {
             setCardError("");
             setTransactionId(paymentIntent.id);
-            console.log(paymentIntent);
             setSuccess("Congrats! Your payment is completed.");
 
             //store payment on database
@@ -110,9 +108,7 @@ const CheckOutForm = ({ order }) => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
                     setProcessing(false);
-                    console.log(data);
                     navigate("/dashboard");
                 });
         }

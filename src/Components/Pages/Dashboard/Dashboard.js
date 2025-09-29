@@ -75,37 +75,46 @@ const Dashboard = () => {
 
     if (adminLoading) return <Loading />;
 
-    const menuItems = admin
-        ? [
-              { name: "Profile", icon: User, path: "/dashboard/profile" },
-              {
-                  name: "Edit Profile",
-                  icon: Settings,
-                  path: "/dashboard/settings",
-              },
-              { name: "Users", icon: Users, path: "/dashboard/users" },
-              {
-                  name: "Manage Products",
-                  icon: Package,
-                  path: "/dashboard/manage-product",
-              },
-              {
-                  name: "Add Product",
-                  icon: Package,
-                  path: "/dashboard/addProduct",
-              },
-              { name: "Manage Orders", icon: ShoppingCart, path: "/dashboard" },
-          ]
-        : [
-              { name: "Profile", icon: User, path: "/dashboard/profile" },
-              {
-                  name: "Edit Profile",
-                  icon: Settings,
-                  path: "/dashboard/settings",
-              },
-              { name: "My Orders", icon: ShoppingCart, path: "/dashboard" },
-              { name: "Add Review", icon: Star, path: "/dashboard/myReviews" },
-          ];
+    const menuItems =
+        admin === true
+            ? [
+                  { name: "Profile", icon: User, path: "/dashboard/profile" },
+                  {
+                      name: "Edit Profile",
+                      icon: Settings,
+                      path: "/dashboard/settings",
+                  },
+                  { name: "Users", icon: Users, path: "/dashboard/users" },
+                  {
+                      name: "Manage Products",
+                      icon: Package,
+                      path: "/dashboard/manage-product",
+                  },
+                  {
+                      name: "Add Product",
+                      icon: Package,
+                      path: "/dashboard/addProduct",
+                  },
+                  {
+                      name: "Manage Orders",
+                      icon: ShoppingCart,
+                      path: "/dashboard",
+                  },
+              ]
+            : [
+                  { name: "Profile", icon: User, path: "/dashboard/profile" },
+                  {
+                      name: "Edit Profile",
+                      icon: Settings,
+                      path: "/dashboard/settings",
+                  },
+                  { name: "My Orders", icon: ShoppingCart, path: "/dashboard" },
+                  {
+                      name: "Add Review",
+                      icon: Star,
+                      path: "/dashboard/myReviews",
+                  },
+              ];
 
     const slideVariants = {
         closed: { x: -320, transition: { type: "spring", stiffness: 200 } },

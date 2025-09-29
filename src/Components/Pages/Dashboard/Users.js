@@ -11,7 +11,7 @@ const Users = () => {
     const [userDel, setUserDel] = useState({});
     const {
         data: users,
-        loading,
+        isLoading,
         refetch,
     } = useQuery("users", () =>
         fetch(`${process.env.REACT_APP_API_URL}api/users/all-users`, {
@@ -32,7 +32,7 @@ const Users = () => {
         })
     );
 
-    if (loading) {
+    if (isLoading) {
         return <Loading />;
     }
 
@@ -49,18 +49,17 @@ const Users = () => {
                         )}`,
                     },
                 }
-            )
-                .then((res) => {
-                    if (res.status === 401 || res.status === 403) {
-                        handleLogout();
-                        return toast.error(
-                            "You are not authorized to perform this action"
-                        );
-                    } else {
-                        return res.json();
-                    }
-                })
-                .then((data) => console.log(data));
+            ).then((res) => {
+                if (res.status === 401 || res.status === 403) {
+                    handleLogout();
+                    return toast.error(
+                        "You are not authorized to perform this action"
+                    );
+                } else {
+                    return res.json();
+                }
+            });
+
             toast.info("User is now an admin");
         } else {
             toast.error("user is not valid");

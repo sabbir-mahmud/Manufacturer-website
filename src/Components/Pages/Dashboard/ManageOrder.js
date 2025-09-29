@@ -2,14 +2,21 @@ import { useState } from "react";
 import Helmet from "react-helmet";
 import { useQuery } from "react-query";
 import { toast } from "react-toastify";
+import useAdmin from "../../../Hooks/useAdmin/useAdmin";
 import useUser from "../../../Hooks/useFirebase.js/useUser";
 import OrderDelete from "./OrderDelete";
 import ShippedModal from "./ShipeedModal";
 
 const ManageOrder = () => {
-    const { handleLogout } = useUser();
+    const { user } = useUser();
+    const { admin, adminLoading } = useAdmin(user);
+
+    const url =
+        admin === true
+            ? `${process.env.REACT_APP_API_URL}api/order/admin`
+            : `${process.env.REACT_APP_API_URL}api/order/?email=${user?.email}`;
     const { data: orders, refetch } = useQuery("orders", () =>
-        fetch(`${process.env.REACT_APP_API_URL}api/order/admin`, {
+        fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -17,7 +24,6 @@ const ManageOrder = () => {
             },
         }).then((res) => {
             if (res.status === 401 || res.status === 403) {
-                handleLogout();
                 return toast.error(
                     "You are not authorized to perform this action"
                 );
